@@ -1,0 +1,90 @@
+services:
+    salvocortesiano.codeboxplus.catalog:
+        class: salvocortesiano\codeboxplus\core\catalog
+
+    salvocortesiano.codeboxplus.code_helper:
+        class: salvocortesiano\codeboxplus\core\code_helper
+
+    salvocortesiano.codeboxplus.access:
+        class: salvocortesiano\codeboxplus\core\access
+        arguments:
+            - '@config'
+            - '@user'
+            - '@dbal.conn'
+
+    salvocortesiano.codeboxplus.highlighter:
+        class: salvocortesiano\codeboxplus\core\highlighter
+        arguments:
+            - '@config'
+            - '@cache.driver'
+            - '@salvocortesiano.codeboxplus.catalog'
+
+    salvocortesiano.codeboxplus.box_renderer:
+        class: salvocortesiano\codeboxplus\core\box_renderer
+        arguments:
+            - '@config'
+            - '@language'
+            - '@user'
+            - '@salvocortesiano.codeboxplus.catalog'
+            - '@salvocortesiano.codeboxplus.highlighter'
+            - '@salvocortesiano.codeboxplus.code_helper'
+            - '@salvocortesiano.codeboxplus.access'
+            - '%core.php_ext%'
+
+    salvocortesiano.codeboxplus.listener:
+        class: salvocortesiano\codeboxplus\event\main_listener
+        arguments:
+            - '@config'
+            - '@controller.helper'
+            - '@template'
+            - '@language'
+            - '@salvocortesiano.codeboxplus.box_renderer'
+            - '@salvocortesiano.codeboxplus.catalog'
+            - '@salvocortesiano.codeboxplus.code_helper'
+        tags:
+            - { name: event.listener }
+
+    salvocortesiano.codeboxplus.controller.download:
+        class: salvocortesiano\codeboxplus\controller\download
+        arguments:
+            - '@config'
+            - '@controller.helper'
+            - '@template'
+            - '@language'
+            - '@user'
+            - '@auth'
+            - '@request'
+            - '@dbal.conn'
+            - '@cache.driver'
+            - '@captcha.factory'
+            - '@salvocortesiano.codeboxplus.catalog'
+            - '@salvocortesiano.codeboxplus.code_helper'
+            - '@salvocortesiano.codeboxplus.access'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+
+    salvocortesiano.codeboxplus.controller.acp:
+        class: salvocortesiano\codeboxplus\controller\acp_controller
+        arguments:
+            - '@config'
+            - '@template'
+            - '@language'
+            - '@user'
+            - '@request'
+            - '@log'
+            - '@dbal.conn'
+            - '@cache.driver'
+            - '@ext.manager'
+            - '@controller.helper'
+            - '@captcha.factory'
+            - '@text_formatter.parser'
+            - '@text_formatter.renderer'
+            - '@salvocortesiano.codeboxplus.catalog'
+            - '@salvocortesiano.codeboxplus.highlighter'
+            - '@salvocortesiano.codeboxplus.code_helper'
+            - '@salvocortesiano.codeboxplus.box_renderer'
+            - '@salvocortesiano.codeboxplus.access'
+            - '@group_helper'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '%core.table_prefix%'

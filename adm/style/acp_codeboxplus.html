@@ -1,0 +1,245 @@
+{% INCLUDECSS '@salvocortesiano_codeboxplus/codeboxplus_acp.css' %}
+{% include 'overall_header.html' %}
+
+<link rel="stylesheet" href="{{ CBP_ASSETS_PATH }}theme/codeboxplus.css?v={{ CBP_EXT_VERSION }}" />
+
+<div class="cbp-acp">
+
+	<h1>{{ lang('ACP_CBP_TITLE') }}</h1>
+
+	<div class="cbp-acp-badges">
+		<span class="cbp-acp-badge cbp-acp-badge-ext"><b>{{ lang('CBP_BADGE_EXT') }}</b><i>v{{ CBP_EXT_VERSION }}</i></span>
+		<span class="cbp-acp-badge cbp-acp-badge-php"><b>PHP</b><i>{{ CBP_PHP_VERSION }}</i></span>
+		<span class="cbp-acp-badge cbp-acp-badge-phpbb"><b>phpBB</b><i>{{ CBP_PHPBB_VERSION }}</i></span>
+		<span class="cbp-acp-badge cbp-acp-badge-geshi"><b>GeSHi</b><i>{{ CBP_GESHI_VERSION }}</i></span>
+		<span class="cbp-acp-badge cbp-acp-badge-langs"><b>{{ lang('CBP_BADGE_LANGUAGES') }}</b><i>{{ CBP_LANG_COUNT }}</i></span>
+		<span class="cbp-acp-badge cbp-acp-badge-dl"><b>{{ lang('CBP_BADGE_DOWNLOADS') }}</b><i>{{ CBP_DOWNLOADS }}</i></span>
+		<span class="cbp-acp-badge cbp-acp-badge-gpl"><b>{{ lang('CBP_BADGE_LICENSE') }}</b><i>GPL-2.0</i></span>
+	</div>
+
+	<p class="cbp-acp-intro">{{ lang('ACP_CBP_EXPLAIN') }}</p>
+
+	<ul class="cbp-acp-tabs">
+		<li{% if CBP_MODE == 'settings' %} class="active"{% endif %}><a href="{{ U_ACTION|replace({'mode=checkup': 'mode=settings'}) }}">{{ lang('ACP_CBP_SETTINGS') }}</a></li>
+		<li{% if CBP_MODE == 'checkup' %} class="active"{% endif %}><a href="{{ U_ACTION|replace({'mode=settings': 'mode=checkup'}) }}">{{ lang('ACP_CBP_CHECKUP') }}</a></li>
+	</ul>
+
+{% if CBP_MODE == 'settings' %}
+
+	{% if S_ERROR %}
+	<div class="errorbox">
+		<h3>{{ lang('WARNING') }}</h3>
+		<p>{{ ERROR_MSG }}</p>
+	</div>
+	{% endif %}
+
+	<div class="cbp-acp-grid">
+		<form id="cbp_acp_settings" method="post" action="{{ U_ACTION }}" class="cbp-acp-form">
+
+			<fieldset>
+				<legend>{{ lang('CBP_LEGEND_DISPLAY') }}</legend>
+				<dl>
+					<dt><label for="cbp_highlight">{{ lang('CBP_HIGHLIGHT') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_HIGHLIGHT_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_highlight" id="cbp_highlight" value="1"{% if CBP_HIGHLIGHT %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_highlight" value="0"{% if not CBP_HIGHLIGHT %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_theme">{{ lang('CBP_THEME') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_THEME_EXPLAIN') }}</span></dt>
+					<dd><select name="cbp_theme" id="cbp_theme" data-cbp-preview="theme">
+						{% for theme in cbp_themes %}<option value="{{ theme.VALUE }}"{% if theme.S_SELECTED %} selected="selected"{% endif %}>{{ theme.NAME }}</option>{% endfor %}
+					</select></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_line_numbers">{{ lang('CBP_LINE_NUMBERS_OPT') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_LINE_NUMBERS_OPT_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_line_numbers" id="cbp_line_numbers" value="1" data-cbp-preview="lines"{% if CBP_LINE_NUMBERS %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_line_numbers" value="0" data-cbp-preview="lines"{% if not CBP_LINE_NUMBERS %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_wrap">{{ lang('CBP_WRAP_OPT') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_WRAP_OPT_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_wrap" id="cbp_wrap" value="1" data-cbp-preview="wrap"{% if CBP_WRAP %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_wrap" value="0" data-cbp-preview="wrap"{% if not CBP_WRAP %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_expanded">{{ lang('CBP_EXPANDED') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_EXPANDED_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_expanded" id="cbp_expanded" value="1"{% if CBP_EXPANDED %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_expanded" value="0"{% if not CBP_EXPANDED %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_max_height">{{ lang('CBP_MAX_HEIGHT') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_MAX_HEIGHT_EXPLAIN') }}</span></dt>
+					<dd><input type="number" min="120" max="3000" step="10" name="cbp_max_height" id="cbp_max_height" value="{{ CBP_MAX_HEIGHT }}" data-cbp-preview="height" /> {{ lang('CBP_PIXEL') }}</dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_tab_size">{{ lang('CBP_TAB_SIZE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_TAB_SIZE_EXPLAIN') }}</span></dt>
+					<dd><input type="number" min="1" max="8" name="cbp_tab_size" id="cbp_tab_size" value="{{ CBP_TAB_SIZE }}" data-cbp-preview="tab" /></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_editor_button">{{ lang('CBP_EDITOR_BUTTON') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_EDITOR_BUTTON_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_editor_button" id="cbp_editor_button" value="1"{% if CBP_EDITOR_BUTTON %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_editor_button" value="0"{% if not CBP_EDITOR_BUTTON %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_favorites">{{ lang('CBP_FAVORITES') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_FAVORITES_EXPLAIN') }}</span></dt>
+					<dd><input type="text" class="inputbox autowidth" size="60" name="cbp_favorites" id="cbp_favorites" value="{{ CBP_FAVORITES }}" />
+						{% if CBP_FAVORITES_NAMES %}<br /><span class="cbp-acp-hint">{{ CBP_FAVORITES_NAMES }}</span>{% endif %}</dd>
+				</dl>
+			</fieldset>
+
+			<fieldset>
+				<legend>{{ lang('CBP_LEGEND_DOWNLOAD') }}</legend>
+				<dl>
+					<dt><label for="cbp_download">{{ lang('CBP_ENABLE_DOWNLOAD') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_ENABLE_DOWNLOAD_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_download" id="cbp_download" value="1"{% if CBP_DOWNLOAD %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_download" value="0"{% if not CBP_DOWNLOAD %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_login_required">{{ lang('CBP_LOGIN_REQUIRED') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_LOGIN_REQUIRED_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_login_required" id="cbp_login_required" value="1"{% if CBP_LOGIN_REQUIRED %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_login_required" value="0"{% if not CBP_LOGIN_REQUIRED %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_download_groups">{{ lang('CBP_DOWNLOAD_GROUPS') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_DOWNLOAD_GROUPS_EXPLAIN') }}</span></dt>
+					<dd><select name="cbp_download_groups[]" id="cbp_download_groups" multiple="multiple" size="8" class="cbp-acp-groups">
+						{% for group in cbp_groups %}<option value="{{ group.ID }}"{% if group.S_SELECTED %} selected="selected"{% endif %}>{{ group.NAME }}</option>{% endfor %}
+					</select>
+					<br /><span class="cbp-acp-hint">{% if S_CBP_ALL_GROUPS %}<strong>{{ lang('CBP_DOWNLOAD_GROUPS_ALL') }}</strong>{% else %}{{ lang('CBP_DOWNLOAD_GROUPS_SOME') }}{% endif %}</span>
+					<br /><a href="#" class="cbp-acp-clear-groups">{{ lang('CBP_DOWNLOAD_GROUPS_CLEAR') }}</a></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_prevent_bots">{{ lang('CBP_PREVENT_BOTS') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_PREVENT_BOTS_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_prevent_bots" id="cbp_prevent_bots" value="1"{% if CBP_PREVENT_BOTS %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_prevent_bots" value="0"{% if not CBP_PREVENT_BOTS %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_require_fdownload">{{ lang('CBP_REQUIRE_FDOWNLOAD') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_REQUIRE_FDOWNLOAD_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_require_fdownload" id="cbp_require_fdownload" value="1"{% if CBP_REQUIRE_FDOWNLOAD %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_require_fdownload" value="0"{% if not CBP_REQUIRE_FDOWNLOAD %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_captcha">{{ lang('CBP_CAPTCHA') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_CAPTCHA_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_captcha" id="cbp_captcha" value="1"{% if CBP_CAPTCHA %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_captcha" value="0"{% if not CBP_CAPTCHA %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_captcha_guests_only">{{ lang('CBP_CAPTCHA_GUESTS_ONLY') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_CAPTCHA_GUESTS_ONLY_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_captcha_guests_only" id="cbp_captcha_guests_only" value="1"{% if CBP_CAPTCHA_GUESTS_ONLY %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_captcha_guests_only" value="0"{% if not CBP_CAPTCHA_GUESTS_ONLY %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_max_attempts">{{ lang('CBP_MAX_ATTEMPTS') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_MAX_ATTEMPTS_EXPLAIN') }}</span></dt>
+					<dd><input type="number" min="1" max="50" name="cbp_max_attempts" id="cbp_max_attempts" value="{{ CBP_MAX_ATTEMPTS }}" /></dd>
+				</dl>
+			</fieldset>
+
+			<fieldset>
+				<legend>{{ lang('CBP_LEGEND_CREDITS') }}</legend>
+				<dl>
+					<dt><label for="cbp_show_credits">{{ lang('CBP_SHOW_CREDITS') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_SHOW_CREDITS_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_show_credits" id="cbp_show_credits" value="1" data-cbp-preview="credits"{% if CBP_SHOW_CREDITS %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_show_credits" value="0" data-cbp-preview="credits"{% if not CBP_SHOW_CREDITS %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_repo_url">{{ lang('CBP_REPO_URL') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_REPO_URL_EXPLAIN') }}</span></dt>
+					<dd><input type="url" class="inputbox autowidth" size="60" maxlength="255" name="cbp_repo_url" id="cbp_repo_url" value="{{ CBP_REPO_URL }}" placeholder="{{ CBP_REPO_URL_DEFAULT }}" /></dd>
+				</dl>
+			</fieldset>
+
+			<fieldset>
+				<legend>{{ lang('CBP_LEGEND_PERFORMANCE') }}</legend>
+				<dl>
+					<dt><label for="cbp_max_highlight_kb">{{ lang('CBP_MAX_HIGHLIGHT_KB') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_MAX_HIGHLIGHT_KB_EXPLAIN') }}</span></dt>
+					<dd><input type="number" min="8" max="4096" name="cbp_max_highlight_kb" id="cbp_max_highlight_kb" value="{{ CBP_MAX_HIGHLIGHT_KB }}" /> {{ lang('KIB') }}</dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_cache_ttl">{{ lang('CBP_CACHE_TTL') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_CACHE_TTL_EXPLAIN') }}</span></dt>
+					<dd><input type="number" min="0" max="2592000" step="60" name="cbp_cache_ttl" id="cbp_cache_ttl" value="{{ CBP_CACHE_TTL }}" /> {{ lang('CBP_SECONDS') }}</dd>
+				</dl>
+			</fieldset>
+
+			<fieldset class="submit-buttons">
+				<legend>{{ lang('SUBMIT') }}</legend>
+				<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
+				<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
+				{{ S_FORM_TOKEN }}
+			</fieldset>
+		</form>
+
+		<aside class="cbp-acp-side">
+			<div class="cbp-acp-card">
+				<h3>{{ lang('CBP_PREVIEW') }}</h3>
+				<p class="cbp-acp-hint">{{ lang('CBP_PREVIEW_EXPLAIN') }}</p>
+				<div id="cbp-acp-preview">{{ CBP_PREVIEW }}</div>
+			</div>
+
+			<div class="cbp-acp-card">
+				<h3>{{ lang('CBP_USAGE') }}</h3>
+				<p class="cbp-acp-hint">{{ lang('CBP_USAGE_EXPLAIN') }}</p>
+				<code class="cbp-acp-snippet">[codebox=php file=index.php]...[/codebox]</code>
+				<code class="cbp-acp-snippet">[codebox=python]...[/codebox]</code>
+				<code class="cbp-acp-snippet">[codebox]...[/codebox]</code>
+			</div>
+
+			<div class="cbp-acp-card">
+				<h3>{{ lang('CBP_MAINTENANCE') }}</h3>
+				<p><a class="button2 cbp-acp-action" href="{{ U_CBP_PURGE }}" data-ajax="true" data-refresh="true">{{ lang('CBP_PURGE_CACHE') }}</a><br /><span class="cbp-acp-hint">{{ lang('CBP_PURGE_CACHE_EXPLAIN') }}</span></p>
+				<p><a class="button2 cbp-acp-action" href="{{ U_CBP_RESET_COUNTER }}" data-ajax="true" data-refresh="true">{{ lang('CBP_RESET_COUNTER') }}</a><br /><span class="cbp-acp-hint">{{ lang('CBP_RESET_COUNTER_EXPLAIN', CBP_DOWNLOADS) }}</span></p>
+				<p><a class="button2 cbp-acp-action cbp-acp-danger" href="{{ U_CBP_RESET_SETTINGS }}" data-ajax="true" data-refresh="true">{{ lang('CBP_RESET_SETTINGS') }}</a><br /><span class="cbp-acp-hint">{{ lang('CBP_RESET_SETTINGS_EXPLAIN') }}</span></p>
+			</div>
+		</aside>
+	</div>
+
+{% else %}
+
+	<div class="cbp-acp-summary{% if S_CBP_ALL_OK %} cbp-acp-summary-ok{% elseif CBP_TOTAL_ERROR %} cbp-acp-summary-error{% else %} cbp-acp-summary-warning{% endif %}">
+		<strong>{% if S_CBP_ALL_OK %}{{ lang('CBP_CHECKUP_ALL_OK') }}{% elseif CBP_TOTAL_ERROR %}{{ lang('CBP_CHECKUP_HAS_ERRORS') }}{% else %}{{ lang('CBP_CHECKUP_HAS_WARNINGS') }}{% endif %}</strong>
+		<span class="cbp-acp-counters">
+			<span class="cbp-acp-count cbp-acp-count-ok">{{ lang('CBP_CHECKUP_OK', CBP_TOTAL_OK) }}</span>
+			<span class="cbp-acp-count cbp-acp-count-warning">{{ lang('CBP_CHECKUP_WARNINGS', CBP_TOTAL_WARNING) }}</span>
+			<span class="cbp-acp-count cbp-acp-count-error">{{ lang('CBP_CHECKUP_ERRORS', CBP_TOTAL_ERROR) }}</span>
+			<span class="cbp-acp-count cbp-acp-count-info">{{ lang('CBP_CHECKUP_INFOS', CBP_TOTAL_INFO) }}</span>
+		</span>
+		<span class="cbp-acp-time">{{ lang('CBP_CHECKUP_RUN_AT', CBP_CHECKUP_TIME) }} &middot; <a href="{{ U_ACTION }}">{{ lang('CBP_CHECKUP_RERUN') }}</a></span>
+	</div>
+
+	<table class="table1 cbp-acp-checks">
+		<thead>
+			<tr>
+				<th class="cbp-acp-col-status">{{ lang('CBP_CHECKUP_STATUS') }}</th>
+				<th>{{ lang('CBP_CHECKUP_TEST') }}</th>
+				<th>{{ lang('CBP_CHECKUP_RESULT') }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for check in cbp_checks %}
+			<tr class="cbp-acp-check cbp-acp-check-{{ check.STATUS }}">
+				<td class="cbp-acp-col-status"><span class="cbp-acp-pill cbp-acp-pill-{{ check.STATUS }}">{{ lang('CBP_STATUS_' ~ check.STATUS|upper) }}</span></td>
+				<td><strong>{{ check.TITLE }}</strong></td>
+				<td>{{ check.DETAIL }}{% if check.U_FIX %}<br /><a class="button2 cbp-acp-action" href="{{ check.U_FIX }}" data-ajax="true" data-refresh="true">{{ check.FIX }}</a>{% endif %}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+{% endif %}
+
+	<div class="cbp-acp-credits">
+		{{ lang('CBP_CREDITS') }}
+	</div>
+</div>
+
+<script>
+	var cbpConfig = {
+		lang: {
+			copy: '{{ lang('CBP_COPY')|e('js') }}',
+			copied: '{{ lang('CBP_COPIED')|e('js') }}',
+			copyFailed: '{{ lang('CBP_COPY_FAILED')|e('js') }}',
+			fullscreen: '{{ lang('CBP_FULLSCREEN')|e('js') }}',
+			exitFullscreen: '{{ lang('CBP_EXIT_FULLSCREEN')|e('js') }}',
+			showLess: '{{ lang('CBP_SHOW_LESS')|e('js') }}',
+			loginRequired: '{{ lang('CBP_ERR_LOGIN_REQUIRED')|e('js') }}'
+		}
+	};
+</script>
+<script src="{{ CBP_ASSETS_PATH }}template/js/codeboxplus.js?v={{ CBP_EXT_VERSION }}"></script>
+{% INCLUDEJS '@salvocortesiano_codeboxplus/codeboxplus_acp.js' %}
+
+{% include 'overall_footer.html' %}

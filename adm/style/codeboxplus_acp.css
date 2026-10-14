@@ -1,0 +1,69 @@
+/**
+ * Codebox Plus - ACP styles
+ * @copyright (c) 2026 Salvo Cortesiano
+ * @license GPL-2.0-only
+ */
+.cbp-acp { --cbp-acp-accent: #2563eb; --cbp-acp-ok: #15803d; --cbp-acp-warn: #b45309; --cbp-acp-err: #b91c1c; --cbp-acp-info: #475569; }
+.cbp-acp h1 { margin-bottom: 8px; }
+
+/* Badges */
+.cbp-acp-badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
+.cbp-acp-badge { display: inline-flex; border-radius: 4px; overflow: hidden; font-size: 11px; line-height: 20px; box-shadow: 0 1px 2px rgba(0, 0, 0, .12); font-family: Verdana, "DejaVu Sans", sans-serif; }
+.cbp-acp-badge b, .cbp-acp-badge i { padding: 0 7px; font-style: normal; color: #fff; }
+.cbp-acp-badge b { background: #555; font-weight: normal; }
+.cbp-acp-badge-ext i { background: #2563eb; }
+.cbp-acp-badge-php i { background: #777bb3; }
+.cbp-acp-badge-phpbb i { background: #0f6db0; }
+.cbp-acp-badge-geshi i { background: #0d9488; }
+.cbp-acp-badge-langs i { background: #7c3aed; }
+.cbp-acp-badge-dl i { background: #ea580c; }
+.cbp-acp-badge-gpl i { background: #16a34a; }
+.cbp-acp-intro { margin: 0 0 12px; }
+
+/* Tabs */
+.cbp-acp-tabs { display: flex; gap: 4px; margin: 0 0 14px; padding: 0; list-style: none; border-bottom: 2px solid #d5dde5; }
+.cbp-acp-tabs li { margin: 0 0 -2px; }
+.cbp-acp-tabs a { display: block; padding: 7px 16px; border: 1px solid transparent; border-radius: 6px 6px 0 0; font-weight: bold; text-decoration: none; }
+.cbp-acp-tabs li.active a { background: #fff; border-color: #d5dde5 #d5dde5 #fff; color: var(--cbp-acp-accent); border-bottom-width: 2px; }
+
+/* Layout */
+.cbp-acp-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 420px); gap: 16px; align-items: start; }
+.cbp-acp-side { position: sticky; top: 10px; }
+.cbp-acp-card { background: #f8fafc; border: 1px solid #dbe3ea; border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; }
+.cbp-acp-card h3 { margin: 0 0 6px; padding: 0; border: 0; }
+.cbp-acp-hint { color: #64748b; font-size: .92em; }
+.cbp-acp-snippet { display: block; margin: 6px 0 0; padding: 6px 8px; background: #0f172a; color: #e2e8f0; border-radius: 5px; font-family: Consolas, Monaco, monospace; font-size: 12px; overflow-x: auto; white-space: nowrap; }
+.cbp-acp-action { display: inline-block; margin-bottom: 3px; }
+a.cbp-acp-danger { color: var(--cbp-acp-err) !important; }
+#cbp-acp-preview .cbp { margin: 8px 0 0; }
+.cbp-acp-form input[type="number"] { width: 90px; }
+
+/* Check-up */
+.cbp-acp-summary { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 12px 14px; border-radius: 8px; border-left: 5px solid; margin-bottom: 12px; background: #f8fafc; }
+.cbp-acp-summary strong { font-size: 1.15em; }
+.cbp-acp-summary-ok { border-color: var(--cbp-acp-ok); background: #f0fdf4; }
+.cbp-acp-summary-warning { border-color: var(--cbp-acp-warn); background: #fffbeb; }
+.cbp-acp-summary-error { border-color: var(--cbp-acp-err); background: #fef2f2; }
+.cbp-acp-counters { display: flex; flex-wrap: wrap; gap: 6px; }
+.cbp-acp-count, .cbp-acp-pill { display: inline-block; padding: 2px 9px; border-radius: 999px; color: #fff; font-size: .9em; font-weight: bold; white-space: nowrap; }
+.cbp-acp-count-ok, .cbp-acp-pill-ok { background: var(--cbp-acp-ok); }
+.cbp-acp-count-warning, .cbp-acp-pill-warning { background: var(--cbp-acp-warn); }
+.cbp-acp-count-error, .cbp-acp-pill-error { background: var(--cbp-acp-err); }
+.cbp-acp-count-info, .cbp-acp-pill-info { background: var(--cbp-acp-info); }
+.cbp-acp-time { margin-left: auto; color: #64748b; }
+.cbp-acp-checks td { vertical-align: top; padding: 7px 8px; }
+.cbp-acp-col-status { width: 110px; text-align: center; }
+.cbp-acp-check-error td { background: #fef2f2; }
+.cbp-acp-check-warning td { background: #fffbeb; }
+
+/* Credits */
+.cbp-acp-credits { margin-top: 18px; padding-top: 10px; border-top: 1px solid #dbe3ea; text-align: center; color: #64748b; font-size: .92em; }
+
+@media (max-width: 1000px) {
+	.cbp-acp-grid { grid-template-columns: minmax(0, 1fr); }
+	.cbp-acp-side { position: static; }
+	.cbp-acp-time { margin-left: 0; }
+}
+
+.cbp-acp-groups { min-width: 260px; max-width: 100%; }
+#cbp-acp-preview .cbp-foot[hidden] { display: none; }

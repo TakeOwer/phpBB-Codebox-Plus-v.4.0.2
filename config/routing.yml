@@ -1,0 +1,6 @@
+salvocortesiano_codeboxplus_download:
+    path: /codeboxplus/download/{post_id}/{hash}
+    defaults: { _controller: salvocortesiano.codeboxplus.controller.download:handle }
+    requirements:
+        post_id: \d+
+        hash: '[0-9a-f]{20}'
