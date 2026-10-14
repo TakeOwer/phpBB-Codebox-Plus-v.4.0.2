@@ -13,6 +13,22 @@ Responsive code boxes with **syntax highlighting for 259 languages**, a utility 
 - **License:** GNU GPL 2.0 (`license.txt`)
 
 ---
+<img width="669" height="737" alt="Screenshot 2026-10-13 191939" src="https://github.com/user-attachments/assets/30f3aae3-ac0b-4112-a209-7fe673da3347" />
+---
+<img width="1602" height="533" alt="Screenshot 2026-10-14 094451" src="https://github.com/user-attachments/assets/58d19b99-b6bf-4719-aed7-f621008d87c8" />
+---
+<img width="2305" height="1093" alt="Screenshot 2026-10-14 094509" src="https://github.com/user-attachments/assets/f994ee37-29ab-45a2-b3d2-833cdcea7e62" />
+---
+<img width="2296" height="362" alt="Screenshot 2026-10-14 094520" src="https://github.com/user-attachments/assets/0ac49a88-ffdd-4706-bf37-19a1a3eea9a3" />
+---
+<img width="2299" height="878" alt="Screenshot 2026-10-14 094536" src="https://github.com/user-attachments/assets/1851157f-7a03-49d0-9db4-629980cd03fe" />
+---
+<img width="869" height="674" alt="Screenshot 2026-10-14 135039" src="https://github.com/user-attachments/assets/ee2d1580-d016-472f-820e-b9b2c77e172d" />
+---
+<img width="1009" height="735" alt="Screenshot 2026-10-14 135057" src="https://github.com/user-attachments/assets/a997e431-e298-4a4d-bf7e-dbe76f13d4fa" />
+---
+<img width="915" height="40" alt="Screenshot 2026-10-14 135045" src="https://github.com/user-attachments/assets/88cd4d58-aa44-41f5-8e76-96ecb2ef0ea5" />
+---
 
 ## Table of Contents
 
