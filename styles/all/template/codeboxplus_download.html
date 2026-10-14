@@ -1,0 +1,46 @@
+{% include 'overall_header.html' %}
+
+<h2 class="cbp-dl-title">{{ lang('CBP_DOWNLOAD_TITLE') }}</h2>
+
+<div class="panel cbp-dl-panel">
+	<div class="inner">
+		<div class="cbp-dl-file">
+			<span class="cbp-dl-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8.5 15.5 10 17l-3 3-1.5-1.5L7 17l-1.5-1.5L7 14l3 3zm7-1.5 3 3-3 3-1.5-1.5L15.5 17 14 15.5z"/></svg></span>
+			<div class="cbp-dl-meta">
+				<strong class="cbp-dl-name">{{ CBP_FILENAME }}</strong>
+				<span>{{ CBP_LANGUAGE }} &middot; {{ CBP_LINES }} &middot; {{ CBP_SIZE }}</span>
+				{% if CBP_POST_SUBJECT %}<span>{{ lang('CBP_FROM_POST') }}{{ lang('COLON') }} <a href="{{ U_CBP_POST }}">{{ CBP_POST_SUBJECT }}</a></span>{% endif %}
+			</div>
+		</div>
+
+		{% if S_CBP_SOLVED %}
+			<p class="cbp-dl-ok">{{ lang('CBP_CONFIRM_SOLVED') }}</p>
+			<p><a class="button" href="{{ U_CBP_DOWNLOAD }}">{{ lang('CBP_DOWNLOAD_NOW') }}</a> <a class="button" href="{{ U_CBP_POST }}">{{ lang('CBP_BACK_TO_POST') }}</a></p>
+		{% else %}
+			<form action="{{ U_CBP_ACTION }}" method="post" id="cbp-download-form">
+				<h3>{{ lang('CBP_CONFIRM') }}</h3>
+				<p>{{ lang('CBP_CONFIRM_EXPLAIN') }}</p>
+				{% if CBP_ERROR %}<p class="error">{{ CBP_ERROR }}</p>{% endif %}
+				<p class="cbp-dl-attempts">{{ lang('CBP_ATTEMPTS_LEFT', CBP_ATTEMPTS_LEFT) }}</p>
+
+				<fieldset class="fields1">
+					{% if CAPTCHA_TEMPLATE and S_CBP_CONFIRM %}
+						{% DEFINE CAPTCHA_TAB_INDEX = 1 %}
+						{% include CAPTCHA_TEMPLATE %}
+					{% endif %}
+					<dl>
+						<dt>&nbsp;</dt>
+						<dd>
+							<input type="submit" name="submit" tabindex="2" value="{{ lang('CBP_DOWNLOAD') }}" class="button1" />
+							<a class="button" href="{{ U_CBP_POST }}">{{ lang('CBP_BACK_TO_POST') }}</a>
+						</dd>
+					</dl>
+				</fieldset>
+				{{ S_HIDDEN_FIELDS }}
+				{{ S_FORM_TOKEN }}
+			</form>
+		{% endif %}
+	</div>
+</div>
+
+{% include 'overall_footer.html' %}

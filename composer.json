@@ -1,0 +1,37 @@
+{
+	"name": "salvocortesiano/codeboxplus",
+	"type": "phpbb-extension",
+	"description": "Codebox Plus: syntax highlighting for 250+ languages (GeSHi), responsive code boxes with copy, select, wrap, line numbers, full screen, expand/collapse and protected download of the code. phpBB 3.3 rewrite of the original Codebox Plus by o0johntam0o.",
+	"homepage": "https://www.netshadows.de/ombra/",
+	"version": "4.0.2",
+	"time": "2026-10-13",
+	"keywords": ["phpbb", "extension", "codebox", "code", "syntax highlighting", "geshi"],
+	"license": "GPL-2.0-only",
+	"authors": [
+		{
+			"name": "Huynh Buu Tam (o0johntam0o)",
+			"email": "o0johntam0o@gmail.com",
+			"homepage": "https://github.com/o0johntam0o",
+			"role": "Original author"
+		},
+		{
+			"name": "Salvo Cortesiano",
+			"email": "info@netshadows.de",
+			"homepage": "https://www.netshadows.de/ombra/",
+			"role": "phpBB 3.3 rewrite and maintainer"
+		}
+	],
+	"require": {
+		"php": ">=7.2.0",
+		"composer/installers": "~1.0"
+	},
+	"require-dev": {
+		"phpbb/epv": "dev-master"
+	},
+	"extra": {
+		"display-name": "Codebox Plus",
+		"soft-require": {
+			"phpbb/phpbb": ">=3.3.0,<4.0.0@dev"
+		}
+	}
+}

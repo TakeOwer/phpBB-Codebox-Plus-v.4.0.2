@@ -1,0 +1,27 @@
+<script>
+	var cbpConfig = {
+		lang: {
+			copy: '{{ lang('CBP_COPY')|e('js') }}',
+			copied: '{{ lang('CBP_COPIED')|e('js') }}',
+			copyFailed: '{{ lang('CBP_COPY_FAILED')|e('js') }}',
+			fullscreen: '{{ lang('CBP_FULLSCREEN')|e('js') }}',
+			exitFullscreen: '{{ lang('CBP_EXIT_FULLSCREEN')|e('js') }}',
+			showLess: '{{ lang('CBP_SHOW_LESS')|e('js') }}',
+			pickerTitle: '{{ lang('CBP_PICKER_TITLE')|e('js') }}',
+			close: '{{ lang('CBP_CLOSE')|e('js') }}',
+			search: '{{ lang('CBP_PICKER_SEARCH')|e('js') }}',
+			searchPlaceholder: '{{ lang('CBP_PICKER_SEARCH_PLACEHOLDER')|e('js') }}',
+			favorites: '{{ lang('CBP_PICKER_FAVORITES')|e('js') }}',
+			allLanguages: '{{ lang('CBP_PICKER_ALL')|e('js') }}',
+			noResults: '{{ lang('CBP_PICKER_NO_RESULTS')|e('js') }}',
+			fileName: '{{ lang('CBP_PICKER_FILE')|e('js') }}',
+			fileNamePlaceholder: '{{ lang('CBP_PICKER_FILE_PLACEHOLDER')|e('js') }}',
+			cancel: '{{ lang('CANCEL')|e('js') }}',
+			insert: '{{ lang('CBP_PICKER_INSERT')|e('js') }}',
+			editorButton: '{{ lang('CBP_EDITOR_BUTTON_TITLE')|e('js') }}',
+			editorButtonShort: '{{ lang('CBP_EDITOR_BUTTON_SHORT')|e('js') }}'
+		}
+	};
+	{% if S_CBP_EDITOR %}var cbpEditor = {{ CBP_EDITOR_JSON }};{% endif %}
+</script>
+{% INCLUDEJS '@salvocortesiano_codeboxplus/js/codeboxplus.js' %}
