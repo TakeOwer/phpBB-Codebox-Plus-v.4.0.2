@@ -222,4 +222,11 @@ $lang = array_merge($lang, array(
 	'CBP_WINDOW_BUTTONS'				=> 'Botones de ventana',
 	'CBP_WINDOW_BUTTONS_EXPLAIN'		=> 'Los tres puntos de colores de la barra de título funcionan como los botones de una ventana: el rojo contrae el cuadro a la barra de título, el amarillo muestra todo el código / menos, el verde abre la pantalla completa. Elige «No» para ocultarlos.',
 	'CBP_GROUP_AI_CRAWLERS'			=> 'Rastreadores de IA',
+	'CBP_SHOW_DL_COUNT'				=> 'Mostrar el contador de descargas',
+	'CBP_SHOW_DL_COUNT_EXPLAIN'		=> 'Muestra en la cabecera de cada cuadro cuántas veces se ha descargado su archivo. El recuento se guarda por mensaje y por bloque de código.',
+	'CBP_EDITOR_TOOLS'					=> 'Herramientas de editor',
+	'CBP_EDITOR_TOOLS_EXPLAIN'			=> 'Añade búsqueda (Ctrl+F), ir a la línea, tamaño de letra, resaltado de líneas, marcas de añadida/eliminada/tachada, enlaces a líneas, posición del cursor y apariciones de una palabra, como en un editor de código. Las marcas se guardan en el navegador de cada usuario.',
+	'CBP_CHK_COUNTER'					=> 'Contador de descargas',
+	'CBP_CHK_COUNTER_OK'				=> 'Tabla OK: %1$d bloques de código descargados, %2$d descargas en total.',
+	'CBP_CHK_COUNTER_FAIL'				=> 'Falta la tabla del contador de descargas: desactiva y vuelve a activar la extensión para ejecutar las migraciones.',
 ));

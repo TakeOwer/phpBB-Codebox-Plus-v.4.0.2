@@ -64,6 +64,9 @@ class download
 	/** @var \salvocortesiano\codeboxplus\core\access */
 	protected $access;
 
+	/** @var \salvocortesiano\codeboxplus\core\counter */
+	protected $counter;
+
 	/** @var string */
 	protected $root_path;
 
@@ -73,7 +76,7 @@ class download
 	/**
 	 * Constructor
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\language\language $language, \phpbb\user $user, \phpbb\auth\auth $auth, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\cache\driver\driver_interface $cache, \phpbb\captcha\factory $captcha_factory, \salvocortesiano\codeboxplus\core\catalog $catalog, \salvocortesiano\codeboxplus\core\code_helper $code_helper, \salvocortesiano\codeboxplus\core\access $access, $root_path, $php_ext)
+	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\language\language $language, \phpbb\user $user, \phpbb\auth\auth $auth, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\cache\driver\driver_interface $cache, \phpbb\captcha\factory $captcha_factory, \salvocortesiano\codeboxplus\core\catalog $catalog, \salvocortesiano\codeboxplus\core\code_helper $code_helper, \salvocortesiano\codeboxplus\core\access $access, \salvocortesiano\codeboxplus\core\counter $counter, $root_path, $php_ext)
 	{
 		$this->config = $config;
 		$this->helper = $helper;
@@ -88,6 +91,7 @@ class download
 		$this->catalog = $catalog;
 		$this->code_helper = $code_helper;
 		$this->access = $access;
+		$this->counter = $counter;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
 	}
@@ -175,7 +179,7 @@ class download
 			}
 		}
 
-		return $this->send_file($block['code'], $filename);
+		return $this->send_file($block['code'], $filename, $post_id, $hash);
 	}
 
 	/**
@@ -339,9 +343,10 @@ class download
 	 * @param string $filename
 	 * @return Response
 	 */
-	protected function send_file($code, $filename)
+	protected function send_file($code, $filename, $post_id = 0, $hash = '')
 	{
 		$this->config->increment('cbp_downloads', 1, false);
+		$count = $post_id ? $this->counter->increment($post_id, $hash) : 0;
 
 		$fallback = preg_replace('/[^A-Za-z0-9._-]+/', '_', $filename);
 		$fallback = trim($fallback, '._') !== '' ? $fallback : 'code.txt';
@@ -350,6 +355,10 @@ class download
 		$response->headers->set('Content-Type', 'text/plain; charset=UTF-8');
 		$response->headers->set('Content-Disposition', $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename, $fallback));
 		$response->headers->set('X-Content-Type-Options', 'nosniff');
+		$response->headers->set('Content-Length', (string) strlen($code));
+		// Used by the JavaScript download (progress bar and counter)
+		$response->headers->set('X-CBP-Download', '1');
+		$response->headers->set('X-CBP-Count', (string) $count);
 		$response->headers->set('Cache-Control', 'private, no-store, max-age=0');
 		$response->headers->set('X-Robots-Tag', 'noindex, nofollow');
 

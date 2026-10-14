@@ -45,6 +45,9 @@ class main_listener implements EventSubscriberInterface
 	/** @var \salvocortesiano\codeboxplus\core\code_helper */
 	protected $code_helper;
 
+	/** @var \salvocortesiano\codeboxplus\core\counter */
+	protected $counter;
+
 	/**
 	 * @param \phpbb\config\config                            $config
 	 * @param \phpbb\controller\helper                        $helper
@@ -53,8 +56,9 @@ class main_listener implements EventSubscriberInterface
 	 * @param \salvocortesiano\codeboxplus\core\box_renderer  $box_renderer
 	 * @param \salvocortesiano\codeboxplus\core\catalog       $catalog
 	 * @param \salvocortesiano\codeboxplus\core\code_helper   $code_helper
+	 * @param \salvocortesiano\codeboxplus\core\counter       $counter
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\language\language $language, \salvocortesiano\codeboxplus\core\box_renderer $box_renderer, \salvocortesiano\codeboxplus\core\catalog $catalog, \salvocortesiano\codeboxplus\core\code_helper $code_helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\language\language $language, \salvocortesiano\codeboxplus\core\box_renderer $box_renderer, \salvocortesiano\codeboxplus\core\catalog $catalog, \salvocortesiano\codeboxplus\core\code_helper $code_helper, \salvocortesiano\codeboxplus\core\counter $counter)
 	{
 		$this->config = $config;
 		$this->helper = $helper;
@@ -63,6 +67,7 @@ class main_listener implements EventSubscriberInterface
 		$this->box_renderer = $box_renderer;
 		$this->catalog = $catalog;
 		$this->code_helper = $code_helper;
+		$this->counter = $counter;
 	}
 
 	/**
@@ -75,7 +80,9 @@ class main_listener implements EventSubscriberInterface
 			'core.text_formatter_s9e_configure_after'	=> 'configure_bbcode',
 			'core.text_formatter_s9e_parse_before'		=> 'protect_nested_boxes',
 			'core.text_formatter_s9e_render_after'		=> 'render_boxes',
+			'core.viewtopic_modify_post_data'			=> 'viewtopic_post_data',
 			'core.viewtopic_modify_post_row'			=> 'viewtopic_post_row',
+			'core.delete_posts_after'					=> 'delete_posts',
 			'core.topic_review_modify_row'				=> 'topic_review_row',
 			'core.search_modify_tpl_ary'				=> 'search_row',
 			'core.page_footer'							=> 'page_footer',
@@ -150,6 +157,32 @@ class main_listener implements EventSubscriberInterface
 	}
 
 	/**
+	 * Viewtopic: load the download counters of the page with one query
+	 *
+	 * @param \phpbb\event\data $event
+	 */
+	public function viewtopic_post_data($event)
+	{
+		if ($this->config['cbp_download'] && $this->config['cbp_show_dl_count'] && !empty($event['post_list']))
+		{
+			$this->counter->preload($event['post_list']);
+		}
+	}
+
+	/**
+	 * Deleted posts: remove their download counters
+	 *
+	 * @param \phpbb\event\data $event
+	 */
+	public function delete_posts($event)
+	{
+		if (!empty($event['post_ids']))
+		{
+			$this->counter->delete_posts((array) $event['post_ids']);
+		}
+	}
+
+	/**
 	 * Viewtopic: add the download links
 	 *
 	 * @param \phpbb\event\data $event
@@ -211,14 +244,23 @@ class main_listener implements EventSubscriberInterface
 			return $html;
 		}
 
-		return preg_replace_callback('#data-cbp-hash="([0-9a-f]{20})" data-cbp-dl=""#', function ($m) use ($post_id) {
+		$html = preg_replace_callback('#data-cbp-hash="([0-9a-f]{20})" data-cbp-dl=""#', function ($m) use ($post_id) {
 			$url = $this->helper->route('salvocortesiano_codeboxplus_download', array(
 				'post_id'	=> $post_id,
 				'hash'		=> $m[1],
 			));
 
-			return 'data-cbp-hash="' . $m[1] . '" data-cbp-dl="' . utf8_htmlspecialchars($url) . '"';
+			$attr = 'data-cbp-hash="' . $m[1] . '" data-cbp-dl="' . utf8_htmlspecialchars($url) . '"';
+
+			if ($this->config['cbp_show_dl_count'])
+			{
+				$attr .= ' data-cbp-downloads="' . (int) $this->counter->get_count($post_id, $m[1]) . '"';
+			}
+
+			return $attr;
 		}, $html);
+
+		return $html;
 	}
 
 	/**

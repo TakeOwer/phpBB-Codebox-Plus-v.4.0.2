@@ -12,6 +12,12 @@ services:
             - '@user'
             - '@dbal.conn'
 
+    salvocortesiano.codeboxplus.counter:
+        class: salvocortesiano\codeboxplus\core\counter
+        arguments:
+            - '@dbal.conn'
+            - '%core.table_prefix%'
+
     salvocortesiano.codeboxplus.highlighter:
         class: salvocortesiano\codeboxplus\core\highlighter
         arguments:
@@ -41,6 +47,7 @@ services:
             - '@salvocortesiano.codeboxplus.box_renderer'
             - '@salvocortesiano.codeboxplus.catalog'
             - '@salvocortesiano.codeboxplus.code_helper'
+            - '@salvocortesiano.codeboxplus.counter'
         tags:
             - { name: event.listener }
 
@@ -60,6 +67,7 @@ services:
             - '@salvocortesiano.codeboxplus.catalog'
             - '@salvocortesiano.codeboxplus.code_helper'
             - '@salvocortesiano.codeboxplus.access'
+            - '@salvocortesiano.codeboxplus.counter'
             - '%core.root_path%'
             - '%core.php_ext%'
 
@@ -85,6 +93,7 @@ services:
             - '@salvocortesiano.codeboxplus.box_renderer'
             - '@salvocortesiano.codeboxplus.access'
             - '@group_helper'
+            - '@salvocortesiano.codeboxplus.counter'
             - '%core.root_path%'
             - '%core.php_ext%'
             - '%core.table_prefix%'

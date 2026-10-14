@@ -222,4 +222,11 @@ $lang = array_merge($lang, array(
 	'CBP_WINDOW_BUTTONS'				=> 'Fönsterknappar',
 	'CBP_WINDOW_BUTTONS_EXPLAIN'		=> 'De tre färgade prickarna i namnlisten fungerar som knapparna i ett fönster: röd fäller ihop rutan till namnlisten, gul visar hela koden / mindre, grön öppnar helskärm. Välj ”Nej” för att dölja dem.',
 	'CBP_GROUP_AI_CRAWLERS'			=> 'AI-sökrobotar',
+	'CBP_SHOW_DL_COUNT'				=> 'Visa nedladdningsräknare',
+	'CBP_SHOW_DL_COUNT_EXPLAIN'		=> 'Visar i varje rutas sidhuvud hur många gånger dess fil har laddats ner. Räkningen sker per inlägg och per kodblock.',
+	'CBP_EDITOR_TOOLS'					=> 'Redigeringsverktyg',
+	'CBP_EDITOR_TOOLS_EXPLAIN'			=> 'Lägger till sökning (Ctrl+F), gå till rad, teckenstorlek, radmarkering, markeringar för tillagd/borttagen/överstruken rad, länkar till rader, markörens position och förekomster av ett ord, som i en kodredigerare. Markeringarna sparas i varje användares webbläsare.',
+	'CBP_CHK_COUNTER'					=> 'Nedladdningsräknare',
+	'CBP_CHK_COUNTER_OK'				=> 'Tabellen OK: %1$d kodblock nedladdade, totalt %2$d nedladdningar.',
+	'CBP_CHK_COUNTER_FAIL'				=> 'Tabellen för nedladdningsräknaren saknas: inaktivera och aktivera tillägget igen för att köra migreringarna.',
 ));

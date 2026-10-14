@@ -222,4 +222,11 @@ $lang = array_merge($lang, array(
 	'CBP_WINDOW_BUTTONS'				=> 'Pulsanti della finestra',
 	'CBP_WINDOW_BUTTONS_EXPLAIN'		=> 'I tre pallini colorati della barra del titolo funzionano come i pulsanti di una finestra: il rosso riduce il riquadro alla sola barra del titolo, il giallo mostra tutto il codice / meno, il verde apre lo schermo intero. Scegli “No” per nasconderli.',
 	'CBP_GROUP_AI_CRAWLERS'			=> 'Crawler IA',
+	'CBP_SHOW_DL_COUNT'				=> 'Mostra il contatore dei download',
+	'CBP_SHOW_DL_COUNT_EXPLAIN'		=> 'Mostra nell’intestazione di ogni riquadro quante volte è stato scaricato il suo file. Il conteggio è tenuto per messaggio e per blocco di codice.',
+	'CBP_EDITOR_TOOLS'					=> 'Strumenti da editor',
+	'CBP_EDITOR_TOOLS_EXPLAIN'			=> 'Aggiunge ricerca (Ctrl+F), vai alla riga, dimensione del testo, evidenziazione delle righe, segni di riga aggiunta/rimossa/barrata, link alle righe, posizione del cursore e occorrenze di una parola, come in un editor di codice. I segni vengono salvati nel browser di ciascun utente.',
+	'CBP_CHK_COUNTER'					=> 'Contatore dei download',
+	'CBP_CHK_COUNTER_OK'				=> 'Tabella OK: %1$d blocchi di codice scaricati, %2$d download in totale.',
+	'CBP_CHK_COUNTER_FAIL'				=> 'Manca la tabella del contatore dei download: disattiva e riattiva l’estensione per eseguire le migrazioni.',
 ));

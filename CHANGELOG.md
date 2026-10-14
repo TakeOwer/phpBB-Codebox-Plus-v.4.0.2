@@ -1,5 +1,18 @@
 # Changelog – Codebox Plus
 
+## 4.0.6 (2026-10-14) – Salvo Cortesiano
+
+- **Nuovo – contatore dei download:** nella testata di ogni riquadro, dopo il numero di righe, compare quante volte è stato scaricato quel codice. Conteggio per blocco di codice di ogni messaggio (nuova tabella `cbp_downloads`), aggiornato subito dopo il download e azzerato insieme al contatore totale in ACP. Opzione ACP per nasconderlo.
+- **Nuovo – barra di avanzamento:** scaricando un file, al centro della barra compare la percentuale reale di scaricamento; a fine download diventa verde e sparisce.
+- **Nuovo – strumenti da editor** (stile Visual Studio Code, disattivabili in ACP): ricerca con `Ctrl+F` (maiuscole/minuscole, parola intera, espressioni regolari, contatore “X di Y”, `Invio`/`F3`), occorrenze di una parola con doppio clic, evidenziazione delle righe con `Maiusc+clic` per gli intervalli, menu con clic destro (evidenzia, aggiunta, rimossa, barrata, copia riga, copia link alla riga, cerca selezione), vai alla riga (`Ctrl+G`), dimensione del testo, posizione del cursore e caratteri selezionati nella barra. Segni e dimensione ricordati dal browser; i link alle righe aprono e fanno lampeggiare la riga.
+- Check-up: nuovo controllo della tabella del contatore.
+- Nuove stringhe in tutte le lingue; nessuna stringa esistente modificata.
+
+## 4.0.5 (2026-10-14) – Salvo Cortesiano
+
+- **Corretto:** un riquadro ridotto con il pallino rosso tornava aperto ricaricando la pagina. Ora la scelta viene ricordata dal browser per ogni riquadro di ogni messaggio (fino a 500 riquadri) e resta anche cambiando pagina; un altro clic sul pallino rosso lo riapre e cancella la scelta.
+- Nessun anello di selezione sul pallino dopo il clic del mouse (alcuni stili lo aggiungevano); resta visibile per chi usa la tastiera.
+
 ## 4.0.4 (2026-10-14) – Salvo Cortesiano
 
 - **Corretto:** nell'elenco dei gruppi autorizzati a scaricare, il gruppo speciale `AI_CRAWLERS` (aggiunto da phpBB 3.3.15) compariva con il nome tecnico quando il pacchetto della lingua del forum non è aggiornato. Ora l'estensione ha la sua traduzione di riserva per i gruppi speciali.

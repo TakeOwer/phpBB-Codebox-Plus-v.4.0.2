@@ -222,4 +222,11 @@ $lang = array_merge($lang, array(
 	'CBP_WINDOW_BUTTONS'				=> 'Fensterschaltflächen',
 	'CBP_WINDOW_BUTTONS_EXPLAIN'		=> 'Die drei farbigen Punkte der Titelleiste funktionieren wie Fensterschaltflächen: Rot klappt die Box auf die Titelleiste ein, Gelb zeigt den gesamten Code / weniger, Grün öffnet das Vollbild. Wähle „Nein“, um sie auszublenden.',
 	'CBP_GROUP_AI_CRAWLERS'			=> 'KI-Crawler',
+	'CBP_SHOW_DL_COUNT'				=> 'Download-Zähler anzeigen',
+	'CBP_SHOW_DL_COUNT_EXPLAIN'		=> 'Zeigt im Kopf jedes Kastens, wie oft seine Datei heruntergeladen wurde. Gezählt wird pro Beitrag und Codeblock.',
+	'CBP_EDITOR_TOOLS'					=> 'Editor-Werkzeuge',
+	'CBP_EDITOR_TOOLS_EXPLAIN'			=> 'Fügt Suche (Strg+F), Gehe zu Zeile, Schriftgröße, Zeilenhervorhebung, Markierungen hinzugefügt/entfernt/durchgestrichen, Links zu Zeilen, Cursorposition und Vorkommen eines Wortes hinzu – wie in einem Code-Editor. Die Markierungen werden im Browser jedes Benutzers gespeichert.',
+	'CBP_CHK_COUNTER'					=> 'Download-Zähler',
+	'CBP_CHK_COUNTER_OK'				=> 'Tabelle OK: %1$d Codeblöcke heruntergeladen, insgesamt %2$d Downloads.',
+	'CBP_CHK_COUNTER_FAIL'				=> 'Die Tabelle des Download-Zählers fehlt: Deaktiviere und aktiviere die Erweiterung erneut, um die Migrationen auszuführen.',
 ));

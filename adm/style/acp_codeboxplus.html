@@ -65,6 +65,11 @@
 						<label><input type="radio" class="radio" name="cbp_window_buttons" value="0" data-cbp-preview="dots"{% if not CBP_WINDOW_BUTTONS %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
 				</dl>
 				<dl>
+					<dt><label for="cbp_editor_tools">{{ lang('CBP_EDITOR_TOOLS') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_EDITOR_TOOLS_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_editor_tools" id="cbp_editor_tools" value="1"{% if CBP_EDITOR_TOOLS %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_editor_tools" value="0"{% if not CBP_EDITOR_TOOLS %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
 					<dt><label for="cbp_expanded">{{ lang('CBP_EXPANDED') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_EXPANDED_EXPLAIN') }}</span></dt>
 					<dd><label><input type="radio" class="radio" name="cbp_expanded" id="cbp_expanded" value="1"{% if CBP_EXPANDED %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
 						<label><input type="radio" class="radio" name="cbp_expanded" value="0"{% if not CBP_EXPANDED %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
@@ -95,6 +100,11 @@
 					<dt><label for="cbp_download">{{ lang('CBP_ENABLE_DOWNLOAD') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_ENABLE_DOWNLOAD_EXPLAIN') }}</span></dt>
 					<dd><label><input type="radio" class="radio" name="cbp_download" id="cbp_download" value="1"{% if CBP_DOWNLOAD %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
 						<label><input type="radio" class="radio" name="cbp_download" value="0"{% if not CBP_DOWNLOAD %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="cbp_show_dl_count">{{ lang('CBP_SHOW_DL_COUNT') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_SHOW_DL_COUNT_EXPLAIN') }}</span></dt>
+					<dd><label><input type="radio" class="radio" name="cbp_show_dl_count" id="cbp_show_dl_count" value="1"{% if CBP_SHOW_DL_COUNT %} checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+						<label><input type="radio" class="radio" name="cbp_show_dl_count" value="0"{% if not CBP_SHOW_DL_COUNT %} checked="checked"{% endif %} /> {{ lang('NO') }}</label></dd>
 				</dl>
 				<dl>
 					<dt><label for="cbp_login_required">{{ lang('CBP_LOGIN_REQUIRED') }}{{ lang('COLON') }}</label><br /><span>{{ lang('CBP_LOGIN_REQUIRED_EXPLAIN') }}</span></dt>
@@ -244,7 +254,46 @@
 			unfold: '{{ lang('CBP_WIN_UNFOLD')|e('js') }}',
 			more: '{{ lang('CBP_WIN_MORE')|e('js') }}',
 			moreNa: '{{ lang('CBP_WIN_MORE_NA')|e('js') }}',
-			loginRequired: '{{ lang('CBP_ERR_LOGIN_REQUIRED')|e('js') }}'
+			loginRequired: '{{ lang('CBP_ERR_LOGIN_REQUIRED')|e('js') }}',
+			toolSearch: '{{ lang('CBP_TOOL_SEARCH')|e('js') }}',
+			findPlaceholder: '{{ lang('CBP_FIND_PLACEHOLDER')|e('js') }}',
+			findCase: '{{ lang('CBP_FIND_CASE')|e('js') }}',
+			findWord: '{{ lang('CBP_FIND_WORD')|e('js') }}',
+			findRegex: '{{ lang('CBP_FIND_REGEX')|e('js') }}',
+			findPrev: '{{ lang('CBP_FIND_PREV')|e('js') }}',
+			findNext: '{{ lang('CBP_FIND_NEXT')|e('js') }}',
+			findClose: '{{ lang('CBP_FIND_CLOSE')|e('js') }}',
+			findCount: '{{ lang('CBP_FIND_COUNT')|e('js') }}',
+			findNone: '{{ lang('CBP_FIND_NONE')|e('js') }}',
+			findBadRegex: '{{ lang('CBP_FIND_BAD_REGEX')|e('js') }}',
+			statusPos: '{{ lang('CBP_STATUS_POS')|e('js') }}',
+			statusSel: '{{ lang('CBP_STATUS_SEL')|e('js') }}',
+			dlCount0: '{{ lang('CBP_DL_COUNT_0')|e('js') }}',
+			dlCount1: '{{ lang('CBP_DL_COUNT_1')|e('js') }}',
+			dlCountN: '{{ lang('CBP_DL_COUNT_N')|e('js') }}',
+			dlProgress: '{{ lang('CBP_DL_PROGRESS')|e('js') }}',
+			dlDone: '{{ lang('CBP_DL_DONE')|e('js') }}',
+			dlError: '{{ lang('CBP_DL_ERROR')|e('js') }}',
+			menuFont: '{{ lang('CBP_MENU_FONT')|e('js') }}',
+			menuFontDown: '{{ lang('CBP_MENU_FONT_DOWN')|e('js') }}',
+			menuFontUp: '{{ lang('CBP_MENU_FONT_UP')|e('js') }}',
+			menuFontReset: '{{ lang('CBP_MENU_FONT_RESET')|e('js') }}',
+			menuGoto: '{{ lang('CBP_MENU_GOTO')|e('js') }}',
+			menuGotoButton: '{{ lang('CBP_MENU_GOTO_BTN')|e('js') }}',
+			menuClearMarks: '{{ lang('CBP_MENU_CLEAR_MARKS')|e('js') }}',
+			menuShortcuts: '{{ lang('CBP_MENU_SHORTCUTS')|e('js') }}',
+			shortcuts: '{{ lang('CBP_SHORTCUTS_LIST')|e('js') }}',
+			ctxLine: '{{ lang('CBP_CTX_LINE')|e('js') }}',
+			ctxMark: '{{ lang('CBP_CTX_MARK')|e('js') }}',
+			ctxAdded: '{{ lang('CBP_CTX_ADDED')|e('js') }}',
+			ctxRemoved: '{{ lang('CBP_CTX_REMOVED')|e('js') }}',
+			ctxStrike: '{{ lang('CBP_CTX_STRIKE')|e('js') }}',
+			ctxCopyLine: '{{ lang('CBP_CTX_COPY_LINE')|e('js') }}',
+			ctxCopyLink: '{{ lang('CBP_CTX_COPY_LINK')|e('js') }}',
+			ctxFindSel: '{{ lang('CBP_CTX_FIND_SEL')|e('js') }}',
+			ctxClear: '{{ lang('CBP_CTX_CLEAR')|e('js') }}',
+			linkCopied: '{{ lang('CBP_LINK_COPIED')|e('js') }}',
+			occCount: '{{ lang('CBP_OCC_COUNT')|e('js') }}'
 		}
 	};
 </script>

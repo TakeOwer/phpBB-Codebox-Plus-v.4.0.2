@@ -222,4 +222,11 @@ $lang = array_merge($lang, array(
 	'CBP_WINDOW_BUTTONS'				=> 'Nút cửa sổ',
 	'CBP_WINDOW_BUTTONS_EXPLAIN'		=> 'Ba chấm màu trên thanh tiêu đề hoạt động như các nút của cửa sổ: đỏ thu gọn khung chỉ còn thanh tiêu đề, vàng hiện toàn bộ mã / thu gọn, xanh mở toàn màn hình. Chọn “Không” để ẩn chúng.',
 	'CBP_GROUP_AI_CRAWLERS'			=> 'Bot thu thập AI',
+	'CBP_SHOW_DL_COUNT'				=> 'Hiện bộ đếm lượt tải',
+	'CBP_SHOW_DL_COUNT_EXPLAIN'		=> 'Hiện ở đầu mỗi khung số lần tệp của nó đã được tải về. Số lượt được đếm theo bài viết và theo khối mã.',
+	'CBP_EDITOR_TOOLS'					=> 'Công cụ trình soạn thảo',
+	'CBP_EDITOR_TOOLS_EXPLAIN'			=> 'Thêm tìm kiếm (Ctrl+F), đi tới dòng, cỡ chữ, tô sáng dòng, đánh dấu dòng thêm/xóa/gạch ngang, liên kết tới dòng, vị trí con trỏ và các lần xuất hiện của một từ, giống như một trình soạn thảo mã. Các đánh dấu được lưu trong trình duyệt của mỗi người dùng.',
+	'CBP_CHK_COUNTER'					=> 'Bộ đếm lượt tải',
+	'CBP_CHK_COUNTER_OK'				=> 'Bảng OK: %1$d khối mã đã được tải, tổng cộng %2$d lượt tải.',
+	'CBP_CHK_COUNTER_FAIL'				=> 'Thiếu bảng của bộ đếm lượt tải: hãy tắt rồi bật lại tiện ích để chạy các migration.',
 ));

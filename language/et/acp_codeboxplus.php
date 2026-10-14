@@ -222,4 +222,11 @@ $lang = array_merge($lang, array(
 	'CBP_WINDOW_BUTTONS'				=> 'Akna nupud',
 	'CBP_WINDOW_BUTTONS_EXPLAIN'		=> 'Tiitliriba kolm värvilist täppi töötavad nagu akna nupud: punane ahendab kasti tiitliribaks, kollane näitab kogu koodi / vähem, roheline avab täisekraani. Vali „Ei”, et need peita.',
 	'CBP_GROUP_AI_CRAWLERS'			=> 'Tehisintellekti robotid',
+	'CBP_SHOW_DL_COUNT'				=> 'Näita allalaadimiste loendurit',
+	'CBP_SHOW_DL_COUNT_EXPLAIN'		=> 'Näitab iga kasti päises, mitu korda selle faili on alla laaditud. Loendatakse postituse ja koodiploki kaupa.',
+	'CBP_EDITOR_TOOLS'					=> 'Redaktori tööriistad',
+	'CBP_EDITOR_TOOLS_EXPLAIN'			=> 'Lisab otsingu (Ctrl+F), reale mineku, kirja suuruse, ridade esiletõstmise, lisatud/eemaldatud/läbikriipsutatud märgised, lingid ridadele, kursori asukoha ja sõna esinemised nagu koodiredaktoris. Märgised salvestatakse iga kasutaja brauserisse.',
+	'CBP_CHK_COUNTER'					=> 'Allalaadimiste loendur',
+	'CBP_CHK_COUNTER_OK'				=> 'Tabel korras: alla laaditud %1$d koodiplokki, kokku %2$d allalaadimist.',
+	'CBP_CHK_COUNTER_FAIL'				=> 'Allalaadimiste loenduri tabel puudub: keela ja luba laiendus uuesti, et migratsioonid käivituksid.',
 ));

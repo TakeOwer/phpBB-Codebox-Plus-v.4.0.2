@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Codebox Plus: syntax highlighting for 250+ languages (GeSHi), responsive code boxes with copy, select, wrap, line numbers, full screen, expand/collapse and protected download of the code. phpBB 3.3 rewrite of the original Codebox Plus by o0johntam0o.",
 	"homepage": "https://www.netshadows.de/ombra/",
-	"version": "4.0.4",
+	"version": "4.0.6",
 	"time": "2026-10-13",
 	"keywords": ["phpbb", "extension", "codebox", "code", "syntax highlighting", "geshi"],
 	"license": "GPL-2.0-only",

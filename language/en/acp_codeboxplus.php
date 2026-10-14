@@ -222,4 +222,11 @@ $lang = array_merge($lang, array(
 	'CBP_WINDOW_BUTTONS'				=> 'Window buttons',
 	'CBP_WINDOW_BUTTONS_EXPLAIN'		=> 'The three coloured dots of the title bar work like the buttons of a window: red folds the box to the title bar only, yellow shows the whole code / less, green opens the full screen. Select “No” to hide them.',
 	'CBP_GROUP_AI_CRAWLERS'			=> 'AI crawlers',
+	'CBP_SHOW_DL_COUNT'				=> 'Show download counter',
+	'CBP_SHOW_DL_COUNT_EXPLAIN'		=> 'Shows in the header of each box how many times its file has been downloaded. The count is kept per post and per code block.',
+	'CBP_EDITOR_TOOLS'					=> 'Editor tools',
+	'CBP_EDITOR_TOOLS_EXPLAIN'			=> 'Adds search (Ctrl+F), go to line, font size, line highlighting, added/removed/struck-through marks, links to lines, the cursor position and the occurrences of a word, like a code editor. The marks are saved in the browser of each user.',
+	'CBP_CHK_COUNTER'					=> 'Download counter',
+	'CBP_CHK_COUNTER_OK'				=> 'Table OK: %1$d code blocks downloaded, %2$d downloads in total.',
+	'CBP_CHK_COUNTER_FAIL'				=> 'The download counter table is missing: disable and enable the extension again to run the migrations.',
 ));

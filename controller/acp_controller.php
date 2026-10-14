@@ -81,6 +81,9 @@ class acp_controller
 	/** @var \phpbb\group\helper */
 	protected $group_helper;
 
+	/** @var \salvocortesiano\codeboxplus\core\counter */
+	protected $counter;
+
 	/** @var string */
 	protected $root_path;
 
@@ -96,7 +99,7 @@ class acp_controller
 	/**
 	 * Constructor
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\template\template $template, \phpbb\language\language $language, \phpbb\user $user, \phpbb\request\request_interface $request, \phpbb\log\log_interface $log, \phpbb\db\driver\driver_interface $db, \phpbb\cache\driver\driver_interface $cache, \phpbb\extension\manager $ext_manager, \phpbb\controller\helper $helper, \phpbb\captcha\factory $captcha_factory, \phpbb\textformatter\parser_interface $parser, \phpbb\textformatter\renderer_interface $renderer, \salvocortesiano\codeboxplus\core\catalog $catalog, \salvocortesiano\codeboxplus\core\highlighter $highlighter, \salvocortesiano\codeboxplus\core\code_helper $code_helper, \salvocortesiano\codeboxplus\core\box_renderer $box_renderer, \salvocortesiano\codeboxplus\core\access $access, \phpbb\group\helper $group_helper, $root_path, $php_ext, $table_prefix)
+	public function __construct(\phpbb\config\config $config, \phpbb\template\template $template, \phpbb\language\language $language, \phpbb\user $user, \phpbb\request\request_interface $request, \phpbb\log\log_interface $log, \phpbb\db\driver\driver_interface $db, \phpbb\cache\driver\driver_interface $cache, \phpbb\extension\manager $ext_manager, \phpbb\controller\helper $helper, \phpbb\captcha\factory $captcha_factory, \phpbb\textformatter\parser_interface $parser, \phpbb\textformatter\renderer_interface $renderer, \salvocortesiano\codeboxplus\core\catalog $catalog, \salvocortesiano\codeboxplus\core\highlighter $highlighter, \salvocortesiano\codeboxplus\core\code_helper $code_helper, \salvocortesiano\codeboxplus\core\box_renderer $box_renderer, \salvocortesiano\codeboxplus\core\access $access, \phpbb\group\helper $group_helper, \salvocortesiano\codeboxplus\core\counter $counter, $root_path, $php_ext, $table_prefix)
 	{
 		$this->config = $config;
 		$this->template = $template;
@@ -117,6 +120,7 @@ class acp_controller
 		$this->box_renderer = $box_renderer;
 		$this->access = $access;
 		$this->group_helper = $group_helper;
+		$this->counter = $counter;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
@@ -257,6 +261,8 @@ class acp_controller
 
 			'CBP_SHOW_CREDITS'			=> (bool) $this->config['cbp_show_credits'],
 			'CBP_WINDOW_BUTTONS'		=> (bool) $this->config['cbp_window_buttons'],
+			'CBP_SHOW_DL_COUNT'			=> (bool) $this->config['cbp_show_dl_count'],
+			'CBP_EDITOR_TOOLS'			=> (bool) $this->config['cbp_editor_tools'],
 			'CBP_REPO_URL'				=> $this->config['cbp_repo_url'],
 			'CBP_REPO_URL_DEFAULT'		=> $this->language->lang('CBP_CREDITS_REPO_URL'),
 			'S_CBP_ALL_GROUPS'			=> empty($this->access->get_allowed_groups()),
@@ -298,6 +304,8 @@ class acp_controller
 			'cbp_cache_ttl'				=> $this->request->variable('cbp_cache_ttl', 86400),
 			'cbp_show_credits'			=> $this->request->variable('cbp_show_credits', 0),
 			'cbp_window_buttons'		=> $this->request->variable('cbp_window_buttons', 0),
+			'cbp_show_dl_count'			=> $this->request->variable('cbp_show_dl_count', 0),
+			'cbp_editor_tools'			=> $this->request->variable('cbp_editor_tools', 0),
 			'cbp_repo_url'				=> trim($this->request->variable('cbp_repo_url', '')),
 		);
 
@@ -306,7 +314,7 @@ class acp_controller
 		$groups = array_values(array_intersect(array_unique(array_filter($groups)), array_keys($this->get_groups())));
 		$data['cbp_download_groups'] = implode(',', $groups);
 
-		foreach (array('cbp_highlight', 'cbp_line_numbers', 'cbp_wrap', 'cbp_expanded', 'cbp_editor_button', 'cbp_download', 'cbp_login_required', 'cbp_prevent_bots', 'cbp_require_fdownload', 'cbp_captcha', 'cbp_captcha_guests_only', 'cbp_show_credits', 'cbp_window_buttons') as $name)
+		foreach (array('cbp_highlight', 'cbp_line_numbers', 'cbp_wrap', 'cbp_expanded', 'cbp_editor_button', 'cbp_download', 'cbp_login_required', 'cbp_prevent_bots', 'cbp_require_fdownload', 'cbp_captcha', 'cbp_captcha_guests_only', 'cbp_show_credits', 'cbp_window_buttons', 'cbp_show_dl_count', 'cbp_editor_tools') as $name)
 		{
 			$data[$name] = $data[$name] ? 1 : 0;
 		}
@@ -403,6 +411,7 @@ class acp_controller
 
 			case 'reset_counter':
 				$this->config->set('cbp_downloads', 0, false);
+				$this->counter->reset();
 			break;
 
 			case 'reset_settings':
@@ -457,6 +466,8 @@ class acp_controller
 			'cbp_download_groups'		=> '',
 			'cbp_show_credits'			=> 1,
 			'cbp_window_buttons'		=> 1,
+			'cbp_show_dl_count'			=> 1,
+			'cbp_editor_tools'			=> 1,
 			'cbp_repo_url'				=> '',
 		);
 	}
@@ -748,6 +759,12 @@ class acp_controller
 		$legacy = (int) $this->db->sql_fetchfield('total');
 		$this->db->sql_freeresult($result);
 		$add($legacy ? 'warning' : 'ok', 'CBP_CHK_LEGACY', $legacy ? $l->lang('CBP_CHK_LEGACY_FOUND', $legacy) : $l->lang('CBP_CHK_LEGACY_OK'));
+
+		// 18. Download counter table
+		$summary = $this->counter->get_summary();
+		$add($summary !== false ? 'ok' : 'error', 'CBP_CHK_COUNTER', $summary !== false
+			? $l->lang('CBP_CHK_COUNTER_OK', $summary['blocks'], $summary['total'])
+			: $l->lang('CBP_CHK_COUNTER_FAIL'));
 
 		return $checks;
 	}

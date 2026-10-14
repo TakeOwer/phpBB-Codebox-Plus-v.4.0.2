@@ -52,6 +52,8 @@ class box_renderer
 		'lines'		=> '<path d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/>',
 		'expand'	=> '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>',
 		'download'	=> '<path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>',
+		'search'	=> '<path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>',
+		'menu'		=> '<path d="M12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>',
 	);
 
 	/**
@@ -138,6 +140,10 @@ class box_renderer
 		$theme = preg_replace('/[^a-z]/', '', (string) $this->config['cbp_theme']) ?: 'auto';
 
 		$classes = array('cbp', 'cbp-theme-' . $theme);
+		if ($this->config['cbp_editor_tools'])
+		{
+			$classes[] = 'cbp-tools-on';
+		}
 		if (!$this->config['cbp_line_numbers'])
 		{
 			$classes[] = 'cbp-nolines';
@@ -165,7 +171,7 @@ class box_renderer
 			$login_attr = ' data-cbp-login="' . $e(generate_board_url() . '/ucp.' . $this->php_ext . '?mode=login') . '"';
 		}
 
-		$html = '<div class="' . implode(' ', $classes) . '" data-cbp-lang="' . $e($id) . '" data-cbp-file="' . $e($download_name) . '" data-cbp-part="' . (int) $part . '" data-cbp-hash="' . $this->code_helper->fingerprint($code) . '" data-cbp-dl=""' . $login_attr . ' style="--cbp-max:' . $max_height . 'px;--cbp-tab:' . $tab_size . ';--cbp-gutter:calc(' . max(2, strlen((string) $count)) . 'ch + 22px)">';
+		$html = '<div class="' . implode(' ', $classes) . '" data-cbp-lang="' . $e($id) . '" data-cbp-file="' . $e($download_name) . '" data-cbp-part="' . (int) $part . '" data-cbp-hash="' . $this->code_helper->fingerprint($code) . '" data-cbp-dl=""' . $login_attr . ' data-cbp-bytes="' . strlen($code) . '" style="--cbp-max:' . $max_height . 'px;--cbp-tab:' . $tab_size . ';--cbp-gutter:calc(' . max(2, strlen((string) $count)) . 'ch + 22px)">';
 
 		// Header
 		$html .= '<div class="cbp-head">';
@@ -183,7 +189,11 @@ class box_renderer
 		{
 			$html .= '<span class="cbp-file" title="' . $e($file) . '">' . $e($file) . '</span>';
 		}
-		$html .= '<span class="cbp-count">' . $e($this->language->lang('CBP_LINES', $count)) . '</span></span>';
+		$html .= '<span class="cbp-count">' . $e($this->language->lang('CBP_LINES', $count)) . '</span>';
+		$html .= '<span class="cbp-dlcount" hidden="hidden"></span></span>';
+
+		// Middle area: cursor position, search results, download progress (filled by the JavaScript)
+		$html .= '<span class="cbp-mid" aria-live="polite"></span>';
 
 		$html .= '<span class="cbp-tools" role="toolbar" aria-label="' . $e($this->language->lang('CBP_TOOLBAR')) . '">';
 
@@ -194,6 +204,12 @@ class box_renderer
 			$html .= '<button type="button" class="cbp-btn cbp-btn-more" data-cbp-act="toggle" title="' . $more . '" aria-label="' . $more . '" aria-expanded="false" hidden="hidden">'
 				. '<i class="icon fa fa-angle-double-down fa-fw" aria-hidden="true"></i>'
 				. '<span class="cbp-btn-txt">' . $more . '</span></button>';
+		}
+
+		if ($this->config['cbp_editor_tools'])
+		{
+			$html .= $this->button('search', 'CBP_TOOL_SEARCH');
+			$html .= $this->button('menu', 'CBP_TOOL_MENU');
 		}
 
 		$html .= $this->button('copy', 'CBP_COPY', true);
