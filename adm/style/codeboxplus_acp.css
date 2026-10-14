@@ -67,3 +67,4 @@ a.cbp-acp-danger { color: var(--cbp-acp-err) !important; }
 
 .cbp-acp-groups { min-width: 260px; max-width: 100%; }
 #cbp-acp-preview .cbp-foot[hidden] { display: none; }
+#cbp-acp-preview .cbp-dots[hidden] { display: none; }

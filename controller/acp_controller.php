@@ -256,6 +256,7 @@ class acp_controller
 			'CBP_CACHE_TTL'				=> (int) $this->config['cbp_cache_ttl'],
 
 			'CBP_SHOW_CREDITS'			=> (bool) $this->config['cbp_show_credits'],
+			'CBP_WINDOW_BUTTONS'		=> (bool) $this->config['cbp_window_buttons'],
 			'CBP_REPO_URL'				=> $this->config['cbp_repo_url'],
 			'CBP_REPO_URL_DEFAULT'		=> $this->language->lang('CBP_CREDITS_REPO_URL'),
 			'S_CBP_ALL_GROUPS'			=> empty($this->access->get_allowed_groups()),
@@ -296,6 +297,7 @@ class acp_controller
 			'cbp_max_highlight_kb'		=> $this->request->variable('cbp_max_highlight_kb', 256),
 			'cbp_cache_ttl'				=> $this->request->variable('cbp_cache_ttl', 86400),
 			'cbp_show_credits'			=> $this->request->variable('cbp_show_credits', 0),
+			'cbp_window_buttons'		=> $this->request->variable('cbp_window_buttons', 0),
 			'cbp_repo_url'				=> trim($this->request->variable('cbp_repo_url', '')),
 		);
 
@@ -304,7 +306,7 @@ class acp_controller
 		$groups = array_values(array_intersect(array_unique(array_filter($groups)), array_keys($this->get_groups())));
 		$data['cbp_download_groups'] = implode(',', $groups);
 
-		foreach (array('cbp_highlight', 'cbp_line_numbers', 'cbp_wrap', 'cbp_expanded', 'cbp_editor_button', 'cbp_download', 'cbp_login_required', 'cbp_prevent_bots', 'cbp_require_fdownload', 'cbp_captcha', 'cbp_captcha_guests_only', 'cbp_show_credits') as $name)
+		foreach (array('cbp_highlight', 'cbp_line_numbers', 'cbp_wrap', 'cbp_expanded', 'cbp_editor_button', 'cbp_download', 'cbp_login_required', 'cbp_prevent_bots', 'cbp_require_fdownload', 'cbp_captcha', 'cbp_captcha_guests_only', 'cbp_show_credits', 'cbp_window_buttons') as $name)
 		{
 			$data[$name] = $data[$name] ? 1 : 0;
 		}
@@ -454,6 +456,7 @@ class acp_controller
 			'cbp_cache_ttl'				=> 86400,
 			'cbp_download_groups'		=> '',
 			'cbp_show_credits'			=> 1,
+			'cbp_window_buttons'		=> 1,
 			'cbp_repo_url'				=> '',
 		);
 	}
@@ -764,7 +767,17 @@ class acp_controller
 		$result = $this->db->sql_query($sql);
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$groups[(int) $row['group_id']] = $this->group_helper->get_name($row['group_name']);
+			$name = $this->group_helper->get_name($row['group_name']);
+
+			// Special groups not translated by the board language pack
+			// (e.g. AI_CRAWLERS, added in phpBB 3.3.15, missing in older packs)
+			if ($name === $row['group_name'] && (int) $row['group_type'] === GROUP_SPECIAL)
+			{
+				$key = 'CBP_GROUP_' . utf8_strtoupper($row['group_name']);
+				$name = $this->language->is_set($key) ? $this->language->lang($key) : ucwords(utf8_strtolower(str_replace('_', ' ', $row['group_name'])));
+			}
+
+			$groups[(int) $row['group_id']] = $name;
 		}
 		$this->db->sql_freeresult($result);
 

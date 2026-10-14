@@ -144,9 +144,43 @@
 		}, 500);
 	}
 
+	/* Light/dark detection: follow the colours of the forum style */
+
+	function parseColor(value) {
+		var m = /rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)(?:[\s,\/]+([\d.]+%?))?\s*\)/.exec(value || '');
+		if (!m) {
+			return null;
+		}
+		var a = m[4] === undefined ? 1 : (m[4].indexOf('%') > -1 ? parseFloat(m[4]) / 100 : parseFloat(m[4]));
+		return {r: +m[1], g: +m[2], b: +m[3], a: a};
+	}
+
+	function isDarkAt(el) {
+		while (el && el.nodeType === 1) {
+			var c = parseColor(window.getComputedStyle(el).backgroundColor);
+			if (c && c.a >= 0.5) {
+				return (0.299 * c.r + 0.587 * c.g + 0.114 * c.b) / 255 < 0.5;
+			}
+			el = el.parentElement;
+		}
+		return false;
+	}
+
+	function applyScheme(box) {
+		if (!box.classList.contains('cbp-theme-auto')) {
+			return;
+		}
+		var dark = isDarkAt(box.parentElement);
+		box.classList.toggle('cbp-scheme-dark', dark);
+		box.classList.toggle('cbp-scheme-light', !dark);
+	}
+
 	var fullBox = null;
 
 	function setFullscreen(box, on) {
+		if (on && box.classList.contains('cbp-folded')) {
+			toggleFold(box, box.querySelector('[data-cbp-act="fold"]'));
+		}
 		var button = box.querySelector('[data-cbp-act="expand"]');
 
 		box.classList.toggle('cbp-full', on);
@@ -167,6 +201,23 @@
 				body.focus({preventScroll: true});
 			}
 		}
+	}
+
+	function toggleFold(box, dot) {
+		var folded = !box.classList.contains('cbp-folded');
+		var label = folded ? t('unfold', 'Restore the box') : t('fold', 'Fold the box');
+
+		if (folded && box.classList.contains('cbp-full')) {
+			setFullscreen(box, false);
+		}
+
+		box.classList.toggle('cbp-folded', folded);
+		if (dot) {
+			dot.setAttribute('title', label);
+			dot.setAttribute('aria-label', label);
+			dot.setAttribute('aria-expanded', folded ? 'false' : 'true');
+		}
+		refresh(box);
 	}
 
 	function toggleMore(box, button) {
@@ -216,6 +267,15 @@
 		if (more) {
 			more.hidden = !(overflow || box.classList.contains('cbp-open'));
 		}
+
+		var dot = box.querySelector('.cbp-dot[data-cbp-act="more"]');
+		if (dot) {
+			var usable = !!more && !more.hidden && !box.classList.contains('cbp-folded');
+			var label = usable ? (more.getAttribute('aria-label') || t('more', 'Show the whole code')) : t('moreNa', 'The whole code is already visible');
+			dot.disabled = !usable;
+			dot.setAttribute('title', label);
+			dot.setAttribute('aria-label', label);
+		}
 	}
 
 	function init(root) {
@@ -224,6 +284,7 @@
 		for (var i = 0; i < boxes.length; i++) {
 			var box = boxes[i];
 			box.setAttribute('data-cbp-ready', '1');
+			applyScheme(box);
 
 			var wrap = box.querySelector('[data-cbp-act="wrap"]');
 			if (wrap) {
@@ -292,6 +353,17 @@
 
 				case 'toggle':
 					toggleMore(box, actionEl);
+				break;
+
+				case 'fold':
+					toggleFold(box, actionEl);
+				break;
+
+				case 'more':
+					var moreButton = box.querySelector('[data-cbp-act="toggle"]');
+					if (moreButton && !moreButton.hidden) {
+						toggleMore(box, moreButton);
+					}
 				break;
 			}
 			return;
@@ -548,6 +620,10 @@
 		modal.file.value = '';
 		renderList('');
 
+		var dark = isDarkAt(textarea);
+		modal.root.classList.toggle('cbp-ui-dark', dark);
+		modal.root.classList.toggle('cbp-ui-light', !dark);
+
 		modal.root.hidden = false;
 		document.documentElement.classList.add('cbp-noscroll');
 		window.setTimeout(function () {
@@ -686,6 +762,27 @@
 					init(document);
 				});
 			}).observe(document.body, {childList: true, subtree: true});
+
+			// Styles with a light/dark switch: follow the change
+			var schemeTimer = null;
+			var reapply = function () {
+				window.clearTimeout(schemeTimer);
+				schemeTimer = window.setTimeout(function () {
+					var boxes = document.querySelectorAll('div.cbp.cbp-theme-auto[data-cbp-ready]');
+					for (var i = 0; i < boxes.length; i++) {
+						applyScheme(boxes[i]);
+					}
+				}, 60);
+			};
+			var schemeObserver = new MutationObserver(reapply);
+			schemeObserver.observe(document.documentElement, {attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-bs-theme', 'data-mode']});
+			schemeObserver.observe(document.body, {attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-bs-theme', 'data-mode']});
+			if (window.matchMedia) {
+				var mq = window.matchMedia('(prefers-color-scheme: dark)');
+				if (mq.addEventListener) {
+					mq.addEventListener('change', reapply);
+				}
+			}
 		}
 	}
 

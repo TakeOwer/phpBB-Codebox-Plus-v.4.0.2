@@ -23,6 +23,10 @@
 		}
 		preview.classList.toggle('cbp-nolines', !checked('cbp_line_numbers'));
 		preview.classList.toggle('cbp-wrap', checked('cbp_wrap'));
+		var dots = preview.querySelector('.cbp-dots');
+		if (dots) {
+			dots.hidden = !checked('cbp_window_buttons');
+		}
 		var foot = preview.querySelector('.cbp-foot');
 		if (foot) {
 			foot.hidden = !checked('cbp_show_credits');

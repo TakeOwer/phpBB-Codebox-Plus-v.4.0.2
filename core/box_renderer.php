@@ -169,7 +169,15 @@ class box_renderer
 
 		// Header
 		$html .= '<div class="cbp-head">';
-		$html .= '<span class="cbp-dots" aria-hidden="true"><i></i><i></i><i></i></span>';
+		// Window buttons: red = fold the box, yellow = show the whole code, green = full screen
+		if ($this->config['cbp_window_buttons'] || $force_credits)
+		{
+			$html .= '<span class="cbp-dots" role="group">'
+				. $this->dot('red', 'fold', 'CBP_WIN_FOLD')
+				. $this->dot('yellow', 'more', 'CBP_WIN_MORE')
+				. $this->dot('green', 'expand', 'CBP_FULLSCREEN')
+				. '</span>';
+		}
 		$html .= '<span class="cbp-title"><span class="cbp-badge">' . $e($name) . '</span>';
 		if ($file !== '')
 		{
@@ -218,6 +226,21 @@ class box_renderer
 		$html .= '</div>';
 
 		return $html;
+	}
+
+	/**
+	 * Window button (coloured dot)
+	 *
+	 * @param string $colour
+	 * @param string $action
+	 * @param string $lang_key
+	 * @return string
+	 */
+	protected function dot($colour, $action, $lang_key)
+	{
+		$label = utf8_htmlspecialchars($this->language->lang($lang_key));
+
+		return '<button type="button" class="cbp-dot cbp-dot-' . $colour . '" data-cbp-act="' . $action . '" title="' . $label . '" aria-label="' . $label . '"></button>';
 	}
 
 	/**

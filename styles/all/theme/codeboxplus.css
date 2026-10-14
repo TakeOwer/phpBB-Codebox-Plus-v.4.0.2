@@ -199,6 +199,70 @@
 	}
 }
 
+
+/* Automatic theme decided by the JavaScript from the colours of the forum style */
+div.cbp.cbp-theme-auto.cbp-scheme-light {
+	--cbp-bg: #fbfcfe;
+	--cbp-fg: #24292f;
+	--cbp-head-bg: #eef2f7;
+	--cbp-head-fg: #3b4654;
+	--cbp-border: #d0d8e2;
+	--cbp-gutter-bg: #f1f4f8;
+	--cbp-gutter-fg: #9aa5b1;
+	--cbp-hover: rgba(37, 99, 235, .07);
+	--cbp-mark: rgba(250, 204, 21, .32);
+	--cbp-btn-fg: #4b5563;
+	--cbp-btn-hover: #e2e8f0;
+	--cbp-accent: #2563eb;
+	--cbp-badge-bg: #2563eb;
+	--cbp-badge-fg: #ffffff;
+	--cbp-kw1: #cf222e;
+	--cbp-kw2: #8250df;
+	--cbp-kw3: #0550ae;
+	--cbp-kw4: #953800;
+	--cbp-co: #6e7781;
+	--cbp-st: #0a3069;
+	--cbp-nu: #0550ae;
+	--cbp-sy: #57606a;
+	--cbp-br: #24292f;
+	--cbp-re: #953800;
+	--cbp-me: #8250df;
+	--cbp-es: #116329;
+	--cbp-sc: #116329;
+	--cbp-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 4px 14px rgba(15, 23, 42, .06);
+}
+
+div.cbp.cbp-theme-auto.cbp-scheme-dark {
+	--cbp-bg: #0d1117;
+	--cbp-fg: #e6edf3;
+	--cbp-head-bg: #161b22;
+	--cbp-head-fg: #c9d1d9;
+	--cbp-border: #30363d;
+	--cbp-gutter-bg: #0d1117;
+	--cbp-gutter-fg: #6e7681;
+	--cbp-hover: rgba(56, 139, 253, .1);
+	--cbp-mark: rgba(187, 128, 9, .3);
+	--cbp-btn-fg: #c9d1d9;
+	--cbp-btn-hover: #30363d;
+	--cbp-accent: #58a6ff;
+	--cbp-badge-bg: #1f6feb;
+	--cbp-badge-fg: #ffffff;
+	--cbp-kw1: #ff7b72;
+	--cbp-kw2: #d2a8ff;
+	--cbp-kw3: #79c0ff;
+	--cbp-kw4: #ffa657;
+	--cbp-co: #8b949e;
+	--cbp-st: #a5d6ff;
+	--cbp-nu: #79c0ff;
+	--cbp-sy: #c9d1d9;
+	--cbp-br: #e6edf3;
+	--cbp-re: #ffa657;
+	--cbp-me: #d2a8ff;
+	--cbp-es: #7ee787;
+	--cbp-sc: #7ee787;
+	--cbp-shadow: 0 2px 10px rgba(0, 0, 0, .35);
+}
+
 /* ------------------------------------------------------------------ */
 /* Box                                                                 */
 /* ------------------------------------------------------------------ */
@@ -253,20 +317,78 @@ div.cbp .cbp-head {
 
 div.cbp .cbp-dots {
 	display: inline-flex;
-	gap: 5px;
+	align-items: center;
+	gap: 6px;
 	flex: 0 0 auto;
 }
 
-div.cbp .cbp-dots i {
+div.cbp button.cbp-dot {
+	position: relative;
 	display: block;
-	width: 10px;
-	height: 10px;
+	width: 12px;
+	height: 12px;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
 	border-radius: 50%;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
 	background: #ff5f57;
+	color: rgba(0, 0, 0, .6);
+	font: 700 10px/12px -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+	text-align: center;
+	cursor: pointer;
 }
 
-div.cbp .cbp-dots i:nth-child(2) { background: #febc2e; }
-div.cbp .cbp-dots i:nth-child(3) { background: #28c840; }
+div.cbp button.cbp-dot-yellow { background: #febc2e; }
+div.cbp button.cbp-dot-green { background: #28c840; }
+
+/* Symbols appear on hover, like a real window */
+div.cbp button.cbp-dot::before {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	transition: opacity .12s ease;
+}
+
+div.cbp button.cbp-dot-red::before { content: "\2212"; }
+div.cbp.cbp-folded button.cbp-dot-red::before { content: "+"; }
+div.cbp button.cbp-dot-yellow::before { content: "\2195"; }
+div.cbp.cbp-open button.cbp-dot-yellow::before { content: "\2212"; }
+div.cbp button.cbp-dot-green::before { content: "\2922"; font-size: 9px; }
+div.cbp.cbp-full button.cbp-dot-green::before { content: "\00D7"; font-size: 11px; }
+
+div.cbp .cbp-dots:hover button.cbp-dot::before,
+div.cbp button.cbp-dot:focus-visible::before {
+	opacity: 1;
+}
+
+div.cbp button.cbp-dot:focus-visible {
+	outline: 2px solid var(--cbp-accent);
+	outline-offset: 1px;
+}
+
+div.cbp button.cbp-dot:disabled {
+	background: var(--cbp-border);
+	cursor: default;
+}
+
+div.cbp button.cbp-dot:disabled::before {
+	content: none;
+}
+
+/* Folded box: only the header (and credits) remain */
+div.cbp.cbp-folded .cbp-body {
+	display: none;
+}
+
+div.cbp.cbp-folded .cbp-head {
+	border-bottom-color: transparent;
+}
+
+div.cbp.cbp-folded .cbp-foot {
+	display: none;
+}
 
 div.cbp .cbp-title {
 	display: flex;
@@ -789,6 +911,7 @@ div.cbp .cbp-code a { color: inherit; text-decoration: none; border: 0; }
 }
 
 .cbp-chips {
+	flex: 0 0 auto;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 6px;
@@ -797,6 +920,8 @@ div.cbp .cbp-code a { color: inherit; text-decoration: none; border: 0; }
 .cbp-langs {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	grid-auto-rows: minmax(34px, auto);
+	align-content: start;
 	gap: 4px;
 	min-height: 120px;
 	max-height: 280px;
@@ -807,6 +932,13 @@ div.cbp .cbp-code a { color: inherit; text-decoration: none; border: 0; }
 
 .cbp-dialog button.cbp-chip,
 .cbp-dialog button.cbp-lang {
+	display: block;
+	box-sizing: border-box;
+	width: auto;
+	height: auto;
+	min-height: 32px;
+	max-height: none;
+	float: none;
 	margin: 0;
 	padding: 6px 10px;
 	border: 1px solid #e5e7eb;
@@ -900,19 +1032,18 @@ div.cbp .cbp-code a { color: inherit; text-decoration: none; border: 0; }
 	background: #1d4ed8;
 }
 
-@media (prefers-color-scheme: dark) {
-	.cbp-dialog { background: #161b22; color: #e6edf3; }
-	.cbp-dialog-head, .cbp-dialog-foot { border-color: #30363d; }
-	.cbp-dialog-foot { background: #0d1117; }
-	.cbp-dialog label.cbp-field, .cbp-picker-section, .cbp-empty { color: #8b949e; }
-	.cbp-dialog input.cbp-input { background: #0d1117; border-color: #30363d; color: #e6edf3; }
-	.cbp-dialog button.cbp-chip, .cbp-dialog button.cbp-lang { background: #0d1117; border-color: #30363d; color: #e6edf3; }
-	.cbp-dialog button.cbp-chip:hover, .cbp-dialog button.cbp-lang:hover { background: #1f2937; border-color: #1f6feb; }
-	.cbp-dialog button.cbp-selected { background: #1f6feb; border-color: #1f6feb; color: #fff; }
-	.cbp-dialog button.cbp-close:hover { background: #30363d; color: #fff; }
-	.cbp-dialog button.cbp-cancel { background: #21262d; border-color: #30363d; color: #e6edf3; }
-	.cbp-preview-tag { color: #c9d1d9; }
-}
+/* Dark picker when the forum style is dark (decided by the JavaScript) */
+.cbp-modal.cbp-ui-dark .cbp-dialog { background: #161b22; color: #e6edf3; }
+.cbp-modal.cbp-ui-dark .cbp-dialog-head, .cbp-modal.cbp-ui-dark .cbp-dialog-foot { border-color: #30363d; }
+.cbp-modal.cbp-ui-dark .cbp-dialog-foot { background: #0d1117; }
+.cbp-modal.cbp-ui-dark .cbp-dialog label.cbp-field, .cbp-modal.cbp-ui-dark .cbp-picker-section, .cbp-modal.cbp-ui-dark .cbp-empty { color: #8b949e; }
+.cbp-modal.cbp-ui-dark .cbp-dialog input.cbp-input { background: #0d1117; border-color: #30363d; color: #e6edf3; }
+.cbp-modal.cbp-ui-dark .cbp-dialog button.cbp-chip, .cbp-modal.cbp-ui-dark .cbp-dialog button.cbp-lang { background: #0d1117; border-color: #30363d; color: #e6edf3; }
+.cbp-modal.cbp-ui-dark .cbp-dialog button.cbp-chip:hover, .cbp-modal.cbp-ui-dark .cbp-dialog button.cbp-lang:hover { background: #1f2937; border-color: #1f6feb; }
+.cbp-modal.cbp-ui-dark .cbp-dialog button.cbp-selected { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+.cbp-modal.cbp-ui-dark .cbp-dialog button.cbp-close:hover { background: #30363d; color: #fff; }
+.cbp-modal.cbp-ui-dark .cbp-dialog button.cbp-cancel { background: #21262d; border-color: #30363d; color: #e6edf3; }
+.cbp-modal.cbp-ui-dark .cbp-preview-tag { color: #c9d1d9; }
 
 @media (max-width: 560px) {
 	.cbp-modal { padding: 0; align-items: flex-end; }

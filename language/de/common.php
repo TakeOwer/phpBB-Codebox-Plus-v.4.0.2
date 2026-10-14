@@ -100,4 +100,8 @@ $lang = array_merge($lang, array(
 	'CBP_CREDITS_AUTHOR_NAME'		=> 'Salvo Cortesiano',
 	'CBP_CREDITS_AUTHOR_URL'			=> 'https://www.netshadows.de/ombra/',
 	'CBP_CREDITS_REPO_URL'			=> 'https://github.com/TakeOwer/phpBB-Codebox-Plus-v.4.0.2',
+	'CBP_WIN_FOLD'					=> 'Box einklappen (nur Titelleiste anzeigen)',
+	'CBP_WIN_UNFOLD'					=> 'Box wiederherstellen',
+	'CBP_WIN_MORE'					=> 'Gesamten Code anzeigen / weniger anzeigen',
+	'CBP_WIN_MORE_NA'				=> 'Der gesamte Code ist bereits sichtbar',
 ));

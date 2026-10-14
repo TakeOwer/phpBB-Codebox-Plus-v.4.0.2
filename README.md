@@ -1,394 +1,339 @@
-# Codebox Plus 4.0.2 for phpBB 3.3
+# Codebox Plus 4.0.4 per phpBB 3.3
 
-![Version](https://img.shields.io/badge/version-4.0.2-105080)
-![phpBB](https://img.shields.io/badge/phpBB-3.3.x-377a33)
-![PHP](https://img.shields.io/badge/PHP-%3E%3D7.4-377a33)
-![License](https://img.shields.io/badge/license-GPL--2.0--only-7f7f7f)
+Riquadri di codice responsive con **evidenziazione della sintassi per 259 linguaggi**, barra degli strumenti (copia, seleziona, a capo, numeri di riga, schermo intero, scarica), temi chiari/scuri e **scaricamento protetto** del codice come file.
 
-Responsive code boxes with **syntax highlighting for 259 languages**, a utility toolbar (copy, select, word wrap, line numbers, fullscreen, download), light/dark themes, and **secure code downloading** as a file.
-
-- **Original Author:** Huynh Buu Tam ([o0johntam0o](https://github.com/o0johntam0o)) – Codebox Plus 3.0.0 (2014)
-- **Rewrite for phpBB 3.3 & New Features:** Salvo Cortesiano – [Le Ombre della Rete 360°](https://www.netshadows.de/ombra/)
-- **Highlighting Engine:** [GeSHi](https://github.com/GeSHi/geshi-1.0) by Nigel McNie and Benny Baumann
-- **License:** GNU GPL 2.0 (`license.txt`)
+- **Autore originale:** Huynh Buu Tam ([o0johntam0o](https://github.com/o0johntam0o)) – Codebox Plus 3.0.0 (2014)
+- **Riscrittura per phpBB 3.3 e nuove funzioni:** Salvo Cortesiano – [Le Ombre della Rete 360°](https://www.netshadows.de/ombra/)
+- **Motore di evidenziazione:** [GeSHi](https://github.com/GeSHi/geshi-1.0) di Nigel McNie e Benny Baumann
+- **Licenza:** GNU GPL 2.0 (`license.txt`)
 
 ---
-<img width="669" height="737" alt="Screenshot 2026-10-13 191939" src="https://github.com/user-attachments/assets/9a8e3310-6a14-4e10-b664-ef5e18e2a077" />
----
-<img width="1602" height="533" alt="Screenshot 2026-10-14 094451" src="https://github.com/user-attachments/assets/9d7ddf28-66c3-4e3d-86b7-488a033fdabb" />
----
-<img width="2305" height="1093" alt="Screenshot 2026-10-14 094509" src="https://github.com/user-attachments/assets/28d5c2be-e0f6-4645-90a2-83ac8a14007e" />
----
-<img width="2296" height="362" alt="Screenshot 2026-10-14 094520" src="https://github.com/user-attachments/assets/ead42ef5-9203-446c-ae4d-c9f92302c69f" />
----
-<img width="2299" height="878" alt="Screenshot 2026-10-14 094536" src="https://github.com/user-attachments/assets/9591e8b6-aa9d-47fd-bc8e-895f6d0a7530" />
----
 
-## Table of Contents
+## Indice
 
-1. [Requirements](#1-requirements)
-2. [What's New Compared to the Original Extension](#2-whats-new-compared-to-the-original-extension)
-3. [Installation](#3-installation)
-4. [Upgrading from the Original o0johntam0o/codeboxplus Extension](#4-upgrading-from-the-original-o0johntam0ocodeboxplus-extension)
-5. [Usage in Posts](#5-usage-in-posts)
-6. [The Code Box Toolbar](#6-the-code-box-toolbar)
-7. [Code Downloading and Security](#7-code-downloading-and-security)
-8. [Administration Control Panel (ACP)](#8-administration-control-panel-acp)
+1. [Requisiti](#1-requisiti)
+2. [Novità rispetto all'estensione originale](#2-novità-rispetto-allestensione-originale)
+3. [Installazione](#3-installazione)
+4. [Aggiornamento dall'estensione originale o0johntam0o/codeboxplus](#4-aggiornamento-dallestensione-originale-o0johntam0ocodeboxplus)
+5. [Come si usa nei messaggi](#5-come-si-usa-nei-messaggi)
+6. [La barra degli strumenti del riquadro](#6-la-barra-degli-strumenti-del-riquadro)
+7. [Scaricamento del codice e sicurezza](#7-scaricamento-del-codice-e-sicurezza)
+8. [Pannello di amministrazione (ACP)](#8-pannello-di-amministrazione-acp)
 9. [Check-up](#9-check-up)
-10. [ForumUS Style and Other Styles](#10-forumus-style-and-other-styles)
-11. [Languages](#11-languages)
-12. [Troubleshooting](#12-troubleshooting)
-13. [File Structure](#13-file-structure)
+10. [Stile ForumUS e altri stili](#10-stile-forumus-e-altri-stili)
+11. [Lingue](#11-lingue)
+12. [Risoluzione dei problemi](#12-risoluzione-dei-problemi)
+13. [Struttura dei file](#13-struttura-dei-file)
 14. [Changelog](#14-changelog)
 
 ---
 
-## 1. Requirements
+## 1. Requisiti
 
-| Component | Version |
+| Componente | Versione |
 |---|---|
-| phpBB | 3.3.0 or later (tested on **3.3.19**) |
-| PHP | 7.2 or later (tested on PHP 8.2 / 8.3) |
-| PHP Modules | `dom`, `libxml`, `mbstring` (present in all standard installations) |
-| Styles | prosilver, **ForumUS**, and any derived style (files are in `styles/all`) |
+| phpBB | 3.3.0 o successivo (testata su **3.3.19**) |
+| PHP | 7.2 o successivo (testata su PHP 8.2 / 8.3) |
+| Moduli PHP | `dom`, `libxml`, `mbstring` (presenti in tutte le installazioni standard) |
+| Stili | prosilver, **ForumUS** e qualsiasi stile derivato (i file sono in `styles/all`) |
 
-## 2. What's New Compared to the Original Extension
+## 2. Novità rispetto all'estensione originale
 
-The original extension (2014) no longer works on phpBB 3.3 and PHP 8: the BBCode used the regular expression `/e` modifier (removed in PHP 7), the `routing.yml` file was invalid, the controller initialized the session within the constructor, the download bypassed the template system, and code recognition relied on fragile regular expressions. It has therefore been **rewritten from scratch**, while maintaining full backward compatibility with existing posts.
+L'estensione originale (2014) non funziona più su phpBB 3.3 e PHP 8: il BBCode usava il modificatore `/e` delle espressioni regolari (rimosso da PHP 7), il file `routing.yml` non era valido, il controller avviava la sessione nel costruttore, il download aggirava il sistema di template e il riconoscimento del codice si basava su espressioni regolari fragili. È stata quindi **riscritta da zero**, mantenendo la compatibilità con i messaggi già scritti.
 
-### Fixes and Modernization
+**Correzioni e modernizzazione**
 
-- BBCode registered directly into phpBB 3.3's s9e text formatter (no more manual tweaking in the unalterable BBCode table).
-- Box content is no longer altered: no BBCode, smilies, auto-links, or `<br>` tags inside the code block.
-- Posts written with the old extension (`[Codebox=php file=x.php]...[/Codebox]`) continue to render and download correctly, even those still containing smilies or BBCodes saved inside them.
-- GeSHi updated to the latest version (1.0.9.1 master 2024), featuring PHP 8 fixes (zero warnings or deprecations across all 259 languages, tested one by one).
-- 35 new languages: Rust, Kotlin, Swift, Dart, Julia, Nginx, Sass, Twig, VBScript, Windows Batch, Nim, Racket, PostScript, Standard ML, SSH config, and more, plus **JSON** and **TypeScript**.
-- Convenient aliases: `js`, `ts`, `html`, `py`, `sh`, `yml`, `cs`, `kt`, `rs`, `golang`, `bat`, `ps1`, `txt`, `md`… (see §5).
-- Code ready for phpBB EPV validation: **0 errors, 0 warnings, 0 notices**.
+- BBCode registrato direttamente nel formattatore di testo s9e di phpBB 3.3 (niente più riga nella tabella dei BBCode da non toccare).
+- Il contenuto del riquadro non viene più alterato: niente BBCode, faccine, link automatici o `<br>` dentro il codice.
+- I messaggi scritti con la vecchia estensione (`[Codebox=php file=x.php]...[/Codebox]`) continuano a essere mostrati e scaricati correttamente, anche quelli che contengono ancora faccine o BBCode salvati al loro interno.
+- GeSHi aggiornato all'ultima versione (1.0.9.1 master 2024), con correzioni per PHP 8 (nessun avviso o deprecazione su tutti i 259 linguaggi, testati uno per uno).
+- 35 linguaggi nuovi: Rust, Kotlin, Swift, Dart, Julia, Nginx, Sass, Twig, VBScript, Windows Batch, Nim, Racket, PostScript, Standard ML, SSH config e altri, più **JSON** e **TypeScript**.
+- Alias comodi: `js`, `ts`, `html`, `py`, `sh`, `yml`, `cs`, `kt`, `rs`, `golang`, `bat`, `ps1`, `txt`, `md`… (vedi §5).
+- Codice pronto per la validazione EPV di phpBB: **0 errori, 0 avvisi, 0 notifiche**.
 
-### New Features
+**Nuove funzioni**
 
-- Modern editor-style responsive code box featuring language name, file name, and line numbers.
-- One-click clipboard copy (line numbers are never copied).
-- Select All, word wrap, show/hide line numbers, **fullscreen mode** (Press `Esc` to exit).
-- Fixed line numbers during horizontal scrolling; click a line number to highlight that line.
-- Long code blocks collapsed to a configurable max height with a "Show all code" toggle bar.
-- **6 themes**: Automatic (light/dark based on device settings), Light, Dark, Monokai, Dracula, Nord.
-- **Editor button** (posts, quick reply, private messages) opening a modal with language search, frequently used languages, file name input, and BBCode preview.
-- Secure downloading: forum permission checks, unapproved post filters, bot blocking, force login, "Can download files" permission, CAPTCHA with attempt limits, and a **code fingerprint** system preventing the download of hidden code (e.g., inside `[hide]` tags).
-- Highlighting cache and size limits to prevent server overhead.
-- ACP with info panels, live preview, maintenance tasks with AJAX confirmation, and a dedicated **Check-up** tab.
-- Download counter.
-- Full translations in Italian, English, German, Spanish, Swedish, Estonian, and Vietnamese.
+- Riquadro responsive in stile editor moderno, con nome del linguaggio, nome del file e numero di righe.
+- Copia negli appunti con un clic (i numeri di riga non vengono mai copiati).
+- Seleziona tutto, a capo automatico, mostra/nascondi numeri di riga, **schermo intero** (Esc per uscire).
+- Numeri di riga fissi durante lo scorrimento orizzontale; clic su un numero per evidenziare la riga.
+- Codice lungo compresso ad altezza configurabile con la barra “Mostra tutto il codice”.
+- **6 temi**: Automatico (chiaro/scuro in base al dispositivo), Chiaro, Scuro, Monokai, Dracula, Nord.
+- **Pulsante nell'editor** (messaggi, risposta rapida, messaggi privati) che apre una finestra con ricerca del linguaggio, linguaggi più usati, nome del file e anteprima del BBCode.
+- Scaricamento protetto: controllo permessi del forum, messaggi non approvati, bot, accesso obbligatorio, permesso “Può scaricare file”, CAPTCHA con limite di tentativi e **impronta del codice** che impedisce di scaricare codice nascosto (ad esempio dentro `[hide]`).
+- Cache dell'evidenziazione e limite di dimensione per non appesantire il server.
+- ACP con riquadri informativi, anteprima dal vivo, manutenzione con conferma AJAX e scheda **Check-up**.
+- Contatore degli scaricamenti.
+- Traduzione completa in italiano, inglese, tedesco, spagnolo, svedese, estone e vietnamita.
 
-## 3. Installation
+## 3. Installazione
 
-1. Extract the zip archive: you will obtain the `salvocortesiano/codeboxplus` folder.
-2. Upload the folder via FTP to your forum's `ext/` directory, resulting in `ext/salvocortesiano/codeboxplus/composer.json`.
-3. Go to ACP → **Customize** → **Extension Management** → *Codebox Plus* → **Enable**.
-4. Purge the cache (ACP → General → Purge the cache).
-5. Go to ACP → **Extensions** → **Codebox Plus** → **Check-up** and verify everything is green.
+1. Scompatta lo zip: otterrai la cartella `salvocortesiano/codeboxplus`.
+2. Carica via FTP la cartella in `ext/` del forum, in modo da avere `ext/salvocortesiano/codeboxplus/composer.json`.
+3. ACP → **Personalizza** → **Gestione estensioni** → *Codebox Plus* → **Abilita**.
+4. Svuota la cache (ACP → Generale → Svuota la cache).
+5. Vai in ACP → **Estensioni** → **Codebox Plus** → **Check-up** e controlla che sia tutto verde.
 
-> Via Command Line (SSH):
+> Da riga di comando (SSH):
 > ```bash
 > /opt/alt/php82/usr/bin/php bin/phpbbcli.php extension:enable salvocortesiano/codeboxplus
 > /opt/alt/php82/usr/bin/php bin/phpbbcli.php cache:purge
 > ```
 
-### Upgrading to a Newer Version
+### Aggiornare a una versione successiva
 
-Disable the extension (without deleting data), replace files via FTP, purge the cache, re-enable the extension, and purge both the cache and the `cache/production/twig` folder again.
+Disabilita l'estensione (senza cancellare i dati), sostituisci i file via FTP, svuota la cache, riabilita l'estensione, poi svuota di nuovo la cache e la cartella `cache/production/twig`.
 
-### Uninstallation
+### Disinstallazione
 
-ACP → Extension Management → **Disable**, then **Delete Data**. Posts remain in the database: the BBCode will revert to displaying as plain text.
+ACP → Gestione estensioni → **Disabilita**, poi **Cancella dati**. I messaggi restano nel database: il BBCode tornerà a essere mostrato come testo semplice.
 
-## 4. Upgrading from the Original o0johntam0o/codeboxplus Extension
+## 4. Aggiornamento dall'estensione originale o0johntam0o/codeboxplus
 
-The new version is named `salvocortesiano/codeboxplus` and **cannot run simultaneously with the original** (they share the same BBCode; activation is blocked with a notice if the old one is active).
+La nuova versione ha il nome `salvocortesiano/codeboxplus` e **non può essere attiva insieme a quella originale** (usano lo stesso BBCode: l'attivazione viene bloccata con un messaggio se la vecchia è attiva).
 
-1. ACP → Extension Management → *Codebox Plus* (original) → **Disable**.
-2. *(Optional)* **Delete Data** for the old extension. This does not affect your posts.
-3. Delete the `ext/o0johntam0o/codeboxplus` folder from your server.
-4. Install the new version as described in §3.
+1. ACP → Gestione estensioni → *Codebox Plus* (originale) → **Disabilita**.
+2. *(Facoltativo)* **Cancella dati** della vecchia estensione. Non tocca i messaggi.
+3. Elimina la cartella `ext/o0johntam0o/codeboxplus` dal server.
+4. Installa la nuova versione come al §3.
 
-During installation, the new version automatically:
+Durante l'installazione la nuova versione:
 
-- **imports settings** from the old version (highlighting, expanded state, download, force login, bot blocking, max attempts);
-- **removes the `[Codebox=]` row** from the BBCode table (which would otherwise conflict);
-- removes old `codebox_plus_*` settings if the old extension is no longer installed.
+- **importa le impostazioni** della vecchia (evidenziazione, espanso, scaricamento, accesso obbligatorio, blocco bot, tentativi massimi);
+- **rimuove la riga `[Codebox=]`** dalla tabella dei BBCode (che altrimenti sarebbe in conflitto);
+- rimuove le vecchie impostazioni `codebox_plus_*` se la vecchia estensione non è più installata.
 
-Existing posts **do not need modification**: they are recognized automatically. If your forum comes from phpBB 3.0/3.1 and the Check-up flags posts "in the old format", run once:
+I messaggi già scritti **non vanno modificati**: vengono riconosciuti automaticamente. Se il forum proviene da phpBB 3.0/3.1 e il Check-up segnala messaggi “nel vecchio formato”, eseguire una volta:
 
 ```bash
 /opt/alt/php82/usr/bin/php bin/phpbbcli.php reparser:reparse post_text
 ```
 
-## 5. Usage in Posts
+## 5. Come si usa nei messaggi
 
 ```text
 [codebox=php file=index.php]
 <?php
-echo "Hello World";
+echo "Ciao mondo";
 [/codebox]
 ```
 
-| Syntax | Result |
+| Sintassi | Risultato |
 |---|---|
-| `[codebox=php file=index.php]...[/codebox]` | PHP, with file name (also used for downloading) |
-| `[codebox=python]...[/codebox]` | Python, automatic file name (`codice.py`) |
-| `[codebox]...[/codebox]` | Plain text |
-| `[Codebox=cpp file=test.cpp]...[/codebox]` | Old extension syntax: still fully supported |
+| `[codebox=php file=index.php]...[/codebox]` | PHP, con nome del file (usato anche per lo scaricamento) |
+| `[codebox=python]...[/codebox]` | Python, nome file automatico (`codice.py`) |
+| `[codebox]...[/codebox]` | Testo semplice |
+| `[Codebox=cpp file=test.cpp]...[/Codebox]` | Sintassi della vecchia estensione: funziona ancora |
 
-- The file name can contain letters, numbers, spaces, and `- + . , _`. If the extension is missing, it is added automatically.
-- The language identifier corresponds to a GeSHi identifier (`php`, `javascript`, `html5`, `css`, `sql`, `mysql`, `bash`, `cpp`, `csharp`, `java`, `python`, `ruby`, `go`, `rust`, `kotlin`, `json`, `yaml`, `xml`, `ini`, `apache`, `nginx`, `diff`, …). The complete list is available inside the editor button modal.
-- **Accepted aliases:** `js`→javascript, `ts`→typescript, `html`/`htm`→html5, `xhtml`/`svg`→xml, `py`/`python3`→python, `sh`/`shell`/`zsh`→bash, `yml`→yaml, `cs`→csharp, `kt`→kotlin, `rs`→rust, `golang`→go, `vbs`→vbscript, `bat`/`cmd`→batch, `ps1`→powershell, `c++`→cpp, `htaccess`→apache, `mariadb`→mysql, `scss`/`less`→css, `patch`→diff, `rb`→ruby, `pl`→perl, `txt`/`plain`/`md`/`markdown`→plain text.
-- An unknown language defaults to plain text without throwing errors.
-- Inside the box, BBCodes, smilies, and links are **not** parsed: the code remains exactly as written.
-- Code blocks can contain nested `[codebox]` and `[/codebox]` tags (for example, phpBB extension source code or a string like `'[/codebox]'`): the extension automatically appends a suffix to the outer box (`[codebox:101=php]...[/codebox:101]`), ensuring it always closes correctly. If you see this when editing a post, it is completely normal: do not remove it.
-- If you have multiple code boxes in the same post and one of them contains an unclosed `[codebox]`, you can manually specify the suffix: `[codebox:1=php]...[/codebox:1]`.
+- Il nome del file può contenere lettere, numeri, spazi e `- + . , _`. Se manca l'estensione viene aggiunta in automatico.
+- Il linguaggio è un identificatore GeSHi (`php`, `javascript`, `html5`, `css`, `sql`, `mysql`, `bash`, `cpp`, `csharp`, `java`, `python`, `ruby`, `go`, `rust`, `kotlin`, `json`, `yaml`, `xml`, `ini`, `apache`, `nginx`, `diff`, …). L'elenco completo è nella finestra del pulsante dell'editor.
+- **Alias accettati:** `js`→javascript, `ts`→typescript, `html`/`htm`→html5, `xhtml`/`svg`→xml, `py`/`python3`→python, `sh`/`shell`/`zsh`→bash, `yml`→yaml, `cs`→csharp, `kt`→kotlin, `rs`→rust, `golang`→go, `vbs`→vbscript, `bat`/`cmd`→batch, `ps1`→powershell, `c++`→cpp, `htaccess`→apache, `mariadb`→mysql, `scss`/`less`→css, `patch`→diff, `rb`→ruby, `pl`→perl, `txt`/`plain`/`md`/`markdown`→testo semplice.
+- Un linguaggio sconosciuto viene mostrato come testo semplice (nessun errore).
+- Dentro il riquadro **non** vengono interpretati BBCode, faccine e link: il codice resta esattamente come scritto.
+- Il codice può contenere anche i tag `[codebox]` e `[/codebox]` (per esempio il sorgente di un'estensione phpBB o una stringa come `'[/codebox]'`): l'estensione aggiunge da sola un suffisso al riquadro esterno (`[codebox:101=php]...[/codebox:101]`), così il riquadro si chiude sempre al punto giusto. Se lo vedi quando modifichi il messaggio, è normale: non toglierlo.
+- Se hai più riquadri nello stesso messaggio e uno di essi contiene un `[codebox]` aperto ma mai chiuso, puoi scrivere tu il suffisso: `[codebox:1=php]...[/codebox:1]`.
 
-### The Editor Button
+### Il pulsante nell'editor
 
-The editor toolbar (and quick reply area) features the **`</>`** button. Clicking it opens a modal providing:
+Nella barra dei pulsanti dell'editor (e sopra la casella della risposta rapida) compare il pulsante **`</>`**. Apre una finestra con:
 
-- Instant search by name, identifier, or extension (`py`, `sql`, …);
-- Frequently used languages (configurable in ACP) pinned at the top;
-- Complete list of all 259 supported languages;
-- Optional file name field;
-- Live preview of the generated BBCode.
+- ricerca istantanea per nome, identificativo o estensione (`py`, `sql`, …);
+- i linguaggi più usati (configurabili in ACP) in alto;
+- l'elenco completo dei 259 linguaggi;
+- il nome del file facoltativo;
+- l'anteprima del BBCode che verrà inserito.
 
-Selected text in the editor is automatically wrapped inside the box; without a selection, the cursor is placed inside the empty box. Press `Enter` to insert, `Esc` to close, or double-click a language to insert immediately. The last used language is remembered.
+Il testo selezionato nell'editor viene racchiuso nel riquadro; senza selezione il cursore viene posizionato dentro il riquadro vuoto. `Invio` inserisce, `Esc` chiude, doppio clic su un linguaggio inserisce subito. L'ultimo linguaggio usato viene ricordato.
 
-## 6. The Code Box Toolbar
+## 6. La barra degli strumenti del riquadro
 
-| Button | Function |
+| Pulsante | Funzione |
 |---|---|
-| **Show all code (N lines)** | Appears on the left side of the toolbar only when code exceeds max height; clicking it toggles to **Show less** (Font Awesome icon ⇣/⇡) |
-| **Copy** | Copies code to clipboard (excluding line numbers). Displays "Copied!" |
-| Select All | Selects the code content |
-| Word Wrap | Wraps long lines / toggles horizontal scrolling |
-| Line Numbers | Shows/hides line numbers |
-| Fullscreen | Expands the code box to fullscreen (`Esc` to exit) |
-| **Download** | Downloads the code as a file with the specified name |
+| Pallino **rosso** | Riduce il riquadro alla sola barra del titolo; un altro clic lo riapre |
+| Pallino **giallo** | Mostra tutto il codice / mostra meno (grigio quando il codice è già tutto visibile) |
+| Pallino **verde** | Schermo intero (`Esc` per uscire) |
+| **Mostra tutto il codice (N righe)** | Compare a sinistra della barra solo quando il codice è più lungo dell'altezza massima; con un clic diventa **Mostra meno** (icona Font Awesome ⇣/⇡) |
+| **Copia** | Copia il codice negli appunti (senza numeri di riga). Mostra “Copiato!” |
+| Seleziona tutto | Seleziona il codice |
+| A capo automatico | Manda a capo le righe lunghe / torna allo scorrimento orizzontale |
+| Numeri di riga | Mostra/nasconde i numeri di riga |
+| Schermo intero | Apre il codice a tutto schermo (`Esc` per uscire) |
+| **Scarica** | Scarica il codice come file con il nome indicato |
 
-At the bottom of the box, **credits** are displayed (can be disabled in ACP): original author copyright with a link to their repository, phpBB 3.3 version copyright with a link to Salvo Cortesiano's website, and a link to the GitHub repository.
+In fondo al riquadro compaiono i **crediti** (disattivabili in ACP): copyright dell'autore originale con link al suo repository, copyright della versione phpBB 3.3 con link al sito web di Salvo Cortesiano e link al repository GitHub.
 
-Additional features: click any line number to highlight that line, fixed line numbers during horizontal scrolling, and clean print layout (without buttons or height limits).
+Altre funzioni: clic su un numero di riga per evidenziarla, numeri di riga fissi durante lo scorrimento orizzontale, stampa pulita (senza pulsanti e senza limite di altezza).
 
-On mobile devices, the header wraps to two lines, and toolbar buttons switch to larger icons; container queries ensure the same responsive behavior in narrow containers (quotes, side columns).
+Su smartphone la testata va su due righe e i pulsanti diventano solo icone più grandi; lo stesso succede nei riquadri stretti (citazioni, colonne laterali) grazie alle *container query*.
 
-## 7. Code Downloading and Security
+## 7. Scaricamento del codice e sicurezza
 
-- **In topics** (and topic review during reply), files are served by the forum via `app.php/codeboxplus/download/{post id}/{fingerprint}` after passing these checks:
-  1. Downloads enabled;
-  2. Bot blocking (if enabled);
-  3. Force login (if enabled) → redirects to phpBB login page;
-  4. **Authorized groups** (if selected in ACP): other registered users do not see the download button and receive "Your user group is not authorized"; guests are prompted to log in;
-  5. Post exists and is approved (moderators with `m_approve` can also download pending posts);
-  6. **Forum read permission** and, if required, **"Can download files"** permission;
-  7. Anti-spambot CAPTCHA (if enabled), with session attempt limits; once solved, it remains valid for 30 minutes;
-  8. The code's **fingerprint** (SHA-256) must match a code box within the post.
-- The fingerprint is calculated on the code **actually displayed** to the user: code hidden behind BBCode tags like `[hide]`, `[hhide]`, or `[ghide]` cannot be downloaded by users who cannot view it.
-- In **previews** and **private messages**, files are generated directly by the browser (zero server requests).
-- Files are sent as `text/plain; charset=UTF-8`, with `nosniff`, `no-store`, and `noindex` headers.
-- Each forum download increments the counter displayed in the ACP.
+- **Negli argomenti** (e nella revisione dell'argomento durante la risposta) il file viene fornito dal forum tramite l'indirizzo `app.php/codeboxplus/download/{id messaggio}/{impronta}`, dopo questi controlli:
+  1. scaricamento attivo;
+  2. blocco dei bot (se attivo);
+  3. accesso obbligatorio (se attivo) → pagina di accesso di phpBB;
+  4. **gruppi autorizzati** (se ne hai scelti in ACP): gli altri utenti registrati non vedono il pulsante e ricevono “Il tuo gruppo utenti non è autorizzato”; agli ospiti viene chiesto di accedere;
+  5. il messaggio esiste ed è approvato (i moderatori con `m_approve` possono scaricare anche quelli in attesa);
+  6. permesso di **lettura del forum** e, se richiesto, permesso **“Può scaricare file”**;
+  7. CAPTCHA anti-spambot (se attivo), con limite di tentativi per sessione; una volta risolto vale 30 minuti;
+  8. l'**impronta** (SHA-256) del codice deve corrispondere a un riquadro del messaggio.
+- L'impronta viene calcolata sul codice **effettivamente mostrato** all'utente: il codice nascosto da BBCode come `[hide]`, `[hhide]` o `[ghide]` non può quindi essere scaricato da chi non lo vede.
+- Nelle **anteprime** e nei **messaggi privati** il file viene creato direttamente dal browser (nessuna richiesta al server).
+- Il file viene inviato come `text/plain; charset=UTF-8`, con intestazioni `nosniff`, `no-store` e `noindex`.
+- Ogni scaricamento dal forum incrementa il contatore mostrato in ACP.
 
-## 8. Administration Control Panel (ACP)
+## 8. Pannello di amministrazione (ACP)
 
-ACP → **Extensions** → **Codebox Plus**. At the top: summary boxes displaying extension version, PHP, phpBB, GeSHi, language count, downloads, and license. At the bottom: credits.
+ACP → **Estensioni** → **Codebox Plus**. In cima: riquadri con versione dell'estensione, PHP, phpBB, GeSHi, numero di linguaggi, scaricamenti e licenza. In fondo: i crediti.
 
-### Display Settings
+### Visualizzazione
 
-| Option | Default | Description |
+| Opzione | Predefinito | Descrizione |
 |---|---|---|
-| Syntax highlighting | Yes | Colors code using GeSHi |
-| Color theme | Automatic | Automatic, Light, Dark, Monokai, Dracula, Nord |
-| Line numbers | Yes | Initial state (users can toggle) |
-| Word wrap | No | Initial state (users can toggle) |
-| Always expanded | No | If *No*, long code blocks are collapsed to max height |
-| Maximum height | 420 px | 120 – 3000 |
-| Tab width | 4 | 1 – 8 |
-| Editor button | Yes | `</>` button in editor, quick reply, and PMs |
-| Most used languages | php, javascript, html5, … | Comma-separated identifiers; invalid ones are flagged |
+| Evidenziazione della sintassi | Sì | Colora il codice con GeSHi |
+| Tema dei colori | Automatico | Automatico (segue lo stile del forum), Chiaro, Scuro, Monokai, Dracula, Nord |
+| Pulsanti della finestra | Sì | I tre pallini colorati funzionano come i pulsanti di una finestra; *No* li nasconde |
+| Numeri di riga | Sì | Stato iniziale (l'utente può cambiarlo) |
+| A capo automatico | No | Stato iniziale (l'utente può cambiarlo) |
+| Sempre espanso | No | Se *No*, il codice lungo viene compresso all'altezza massima |
+| Altezza massima | 420 px | 120 – 3000 |
+| Larghezza della tabulazione | 4 | 1 – 8 |
+| Pulsante nell'editor | Sì | Pulsante `</>` nell'editor, risposta rapida e MP |
+| Linguaggi più usati | php, javascript, html5, … | Identificativi separati da virgole; quelli non validi vengono segnalati |
 
-### Download Settings
+### Scaricamento
 
-| Option | Default | Description |
+| Opzione | Predefinito | Descrizione |
 |---|---|---|
-| Enable downloads | Yes | Displays the *Download* button |
-| Force login | No | Guests must log in |
-| **Authorized download groups** | none = all | Multi-select user groups (Ctrl/Cmd + click). Only members of selected groups can download; "Deselect all" reverts to "all groups" |
-| Block bots | Yes | Bots cannot see the button or download |
-| Require "Can download files" permission | No | Uses forum attachment permissions |
-| Anti-spambot confirmation | No | Uses CAPTCHA configured in *Anti-spambot countermeasures* |
-| Confirmation for guests only | Yes | Registered users bypass CAPTCHA |
-| Maximum attempts | 3 | Allowed errors per session |
+| Attiva lo scaricamento | Sì | Mostra il pulsante *Scarica* |
+| Accesso obbligatorio | No | Gli ospiti devono accedere |
+| **Gruppi autorizzati a scaricare** | nessuno = tutti | Selezione multipla dei gruppi (Ctrl/Cmd + clic). Solo i membri dei gruppi scelti possono scaricare; “Deseleziona tutti” torna a “tutti i gruppi” |
+| Blocca i bot | Sì | I bot non vedono il pulsante e non possono scaricare |
+| Richiedi il permesso “Può scaricare file” | No | Usa il permesso del forum per gli allegati |
+| Conferma anti-spambot | No | Usa il CAPTCHA configurato in *Contromisure anti-spambot* |
+| Conferma solo per gli ospiti | Sì | I registrati non vedono il CAPTCHA |
+| Tentativi massimi | 3 | Errori consentiti per sessione |
 
-### Credits Settings
+### Crediti
 
-| Option | Default | Description |
+| Opzione | Predefinito | Descrizione |
 |---|---|---|
-| Show credits | Yes | Credit line at the bottom of each code box |
-| GitHub repository URL | empty | Your repository; if empty, `CBP_CREDITS_REPO_URL` from language files is used |
+| Mostra i crediti | Sì | Riga dei crediti in fondo a ogni riquadro |
+| Indirizzo del repository GitHub | vuoto | Il tuo repository; se vuoto si usa `CBP_CREDITS_REPO_URL` dei file di lingua |
 
-Credit names and URLs are located in `language/xx/common.php` at the bottom under the comment *“Credits at the bottom of the boxes”*:
+Nomi e indirizzi dei crediti sono nei file `language/xx/common.php`, in fondo, sotto il commento *“Crediti in fondo ai riquadri”*:
 
 ```php
 'CBP_CREDITS_ORIGINAL_NAME' => 'o0johntam0o (Huynh Buu Tam)',
 'CBP_CREDITS_ORIGINAL_URL'  => 'https://github.com/o0johntam0o/phpBB-Extension-Codebox-Plus',
 'CBP_CREDITS_AUTHOR_NAME'   => 'Salvo Cortesiano',
 'CBP_CREDITS_AUTHOR_URL'    => 'https://www.netshadows.de/ombra/',
-'CBP_CREDITS_REPO_URL'      => 'https://github.com/YOUR-GITHUB-USERNAME/phpbb-codeboxplus', // placeholder: replace this
+'CBP_CREDITS_REPO_URL'      => 'https://github.com/YOUR-GITHUB-USERNAME/phpbb-codeboxplus', // indirizzo fittizio: sostituiscilo
 ```
 
-### Performance Settings
+### Prestazioni
 
-| Option | Default | Description |
+| Opzione | Predefinito | Descrizione |
 |---|---|---|
-| Highlighting limit | 256 KiB | Code exceeding this size renders without syntax colors |
-| Highlighting cache | 86400 s | 0 = disabled |
+| Limite dell'evidenziazione | 256 KiB | Oltre questa dimensione il codice è mostrato senza colori |
+| Cache dell'evidenziazione | 86400 s | 0 = disattivata |
 
-### Live Preview & Maintenance
+### Anteprima dal vivo e manutenzione
 
-- The **live preview** on the right updates instantly as you change themes, line numbers, word wrap, height, and tab width.
-- **Purge highlighting cache**, **Reset counter**, and **Restore default settings** require confirmation via phpBB's AJAX modal and are logged in the administrator log.
+- L'**anteprima** a destra si aggiorna mentre cambi tema, numeri di riga, a capo, altezza e tabulazione.
+- **Svuota la cache dell'evidenziazione**, **Azzera il contatore** e **Ripristina le impostazioni predefinite** chiedono conferma con il riquadro AJAX di phpBB e vengono registrati nel log amministratore.
 
 ## 9. Check-up
 
-The **Check-up** tab runs 18 diagnostic tests, displaying results as *OK*, *Warning*, *Error*, or *Info*:
+La scheda **Check-up** esegue 18 controlli e li mostra con stato *OK*, *Avviso*, *Errore* o *Info*:
 
-1. PHP version;
-2. phpBB version;
-3. PHP modules (`dom`, `libxml`, `mbstring`);
-4. Presence of all GeSHi language definition files;
-5. Actual syntax highlighting test using sample PHP code;
-6. Registration of the `[codebox]` BBCode in the text formatter;
-7. Code box generation with toolbar and line numbers;
-8. Fingerprint consistency between displayed code and saved code (download links);
-9. Download URL generation;
-10. Presence of legacy `[Codebox=]` BBCode in the database BBCode table (with **Remove it now** button);
-11. Original extension still active or folder still present;
-12. Cache read/write permissions;
-13. Authorized download groups configuration;
-14. CAPTCHA plugin availability (if confirmation is enabled);
-15. Language files for installed forum languages;
-16. Style files (CSS, JavaScript, template);
-17. Number of posts containing code boxes;
-18. Posts still saved in legacy phpBB 3.0/3.1 format.
+1. versione di PHP;
+2. versione di phpBB;
+3. moduli PHP (`dom`, `libxml`, `mbstring`);
+4. presenza di tutti i file di linguaggio di GeSHi;
+5. evidenziazione reale di un codice PHP di prova;
+6. registrazione del BBCode `[codebox]` nel formattatore di testo;
+7. generazione del riquadro con barra degli strumenti e numeri di riga;
+8. coerenza dell'impronta tra codice mostrato e codice salvato (collegamenti di scaricamento);
+9. generazione dell'indirizzo di scaricamento;
+10. presenza del vecchio BBCode `[Codebox=]` nella tabella dei BBCode (con pulsante **Rimuovilo ora**);
+11. estensione originale ancora attiva o cartella ancora presente;
+12. lettura/scrittura della cache;
+13. gruppi autorizzati a scaricare;
+14. disponibilità del plugin CAPTCHA (se la conferma è attiva);
+15. file di lingua per le lingue installate nel forum;
+16. file dello stile (CSS, JavaScript, template);
+17. numero di messaggi che contengono riquadri di codice;
+18. messaggi ancora salvati nel vecchio formato phpBB 3.0/3.1.
 
-## 10. ForumUS Style and Other Styles
+## 10. Stile ForumUS e altri stili
 
-- All graphic assets are located in `styles/all`, ensuring compatibility with **ForumUS**, prosilver, and any other style without needing duplicate file copies.
-- CSS uses custom classes prefixed with `cbp-` and specific selectors, preventing ForumUS rules on `pre`, `code`, `button`, `ol`, and `li` from breaking the layout.
-- The editor button is inserted into the standard toolbar (`posting_editor_buttons_custom_tags_before`). If a style or extension (e.g., ABBC3) replaces or hides that bar, the script automatically appends a **Code** button above the text area.
-- The **Automatic** theme follows the device's light/dark mode preference. If using a dark variant of ForumUS, select the **Dark**, **Monokai**, **Dracula**, or **Nord** theme in the ACP.
+- Tutti i file grafici sono in `styles/all`, quindi valgono per **ForumUS**, prosilver e qualsiasi altro stile senza copie aggiuntive.
+- Il CSS usa classi proprie con prefisso `cbp-` e selettori specifici, così le regole di ForumUS su `pre`, `code`, `button`, `ol` e `li` non deformano il riquadro.
+- Il pulsante dell'editor viene inserito nella barra standard (`posting_editor_buttons_custom_tags_before`). Se uno stile o un'estensione (es. ABBC3) sostituisce o nasconde quella barra, lo script aggiunge automaticamente un pulsante **Codice** sopra la casella di testo.
+- Il tema **Automatico** segue i colori dello stile del forum: riquadri e finestra di scelta del linguaggio diventano scuri con gli stili scuri (per esempio **Subway** con la pelle *Dark*, provato) e chiari con quelli chiari, anche quando lo stile ha un interruttore chiaro/scuro. Senza JavaScript segue l'impostazione del dispositivo. Puoi sempre forzare un tema in ACP.
 
-## 11. Languages
+## 11. Lingue
 
-| Language | Interface | ACP | Language Names |
+| Lingua | Interfaccia | ACP | Nomi dei linguaggi |
 |---|---|---|---|
-| Italian | ✔ | ✔ | ✔ |
-| English | ✔ | ✔ | ✔ |
-| German | ✔ | ✔ | ✔ |
-| Spanish | ✔ | ✔ | ✔ |
-| Swedish | ✔ | ✔ | ✔ |
-| Estonian | ✔ | ✔ | ✔ |
-| Vietnamese | ✔ | ✔ | ✔ |
+| Italiano | ✔ | ✔ | ✔ |
+| Inglese | ✔ | ✔ | ✔ |
+| Tedesco | ✔ | ✔ | ✔ |
+| Spagnolo | ✔ | ✔ | ✔ |
+| Svedese | ✔ | ✔ | ✔ |
+| Estone | ✔ | ✔ | ✔ |
+| Vietnamita | ✔ | ✔ | ✔ |
 
-All text strings reside in `language/xx/`: `common.php` (box, editor, download), `syntax.php` (names of the 259 languages), `info_acp_codeboxplus.php` (modules and logs), and `acp_codeboxplus.php` (panel).
+Tutti i testi stanno nei file `language/xx/`: `common.php` (riquadro, editor, scaricamento), `syntax.php` (nomi dei 259 linguaggi), `info_acp_codeboxplus.php` (moduli e log) e `acp_codeboxplus.php` (pannello).
 
-## 12. Troubleshooting
+## 12. Risoluzione dei problemi
 
-| Issue | Solution |
+| Problema | Soluzione |
 |---|---|
-| BBCode appears as plain text `[codebox=...]` | Purge forum cache; check Check-up (item 6) |
-| "There are no registered paths for namespace salvocortesiano_codeboxplus" after disabling extension | Purge cache and delete `cache/production/twig` |
-| A post written with version 4.0.0 containing `[codebox]` inside code is still broken | Edit and re-save the post, or run `bin/phpbbcli.php reparser:reparse post_text` |
-| Download returns "code not found" | The post was edited after the page was loaded: reload the topic |
-| Colors do not update after changing theme | Hard-refresh the page with Ctrl+F5 (browser cache) |
-| Massive code block loads slowly | Lower the *Highlighting limit* or keep cache enabled |
-| Copy button does not work | On insecure HTTP connections, some browsers block clipboard access: an fallback method is used; "Select All" remains available |
-| CAPTCHA does not appear | Check *Anti-spambot countermeasures* and Check-up (item 13) |
+| Il BBCode appare come testo `[codebox=...]` | Svuota la cache del forum; controlla il Check-up (punto 6) |
+| “There are no registered paths for namespace salvocortesiano_codeboxplus” dopo aver disattivato l'estensione | Svuota la cache e cancella `cache/production/twig` |
+| Un messaggio scritto con la 4.0.0 che conteneva `[codebox]` nel codice è ancora spezzato | Modifica il messaggio e salvalo di nuovo, oppure esegui `bin/phpbbcli.php reparser:reparse post_text` |
+| Lo scaricamento risponde “codice non trovato” | Il messaggio è stato modificato dopo il caricamento della pagina: ricarica l'argomento |
+| I colori non cambiano dopo aver modificato il tema | Ricarica la pagina con Ctrl+F5 (cache del browser) |
+| Codice enorme lento da mostrare | Riduci il *Limite dell'evidenziazione* o lascia attiva la cache |
+| Il pulsante Copia non funziona | Su HTTP non protetto alcuni browser bloccano gli appunti: viene usato un metodo alternativo; in ogni caso resta “Seleziona tutto” |
+| Il CAPTCHA non compare | Verifica *Contromisure anti-spambot* e il Check-up (punto 13) |
 
-## 13. File Structure
+## 13. Struttura dei file
 
 ```text
 salvocortesiano/codeboxplus/
-├── composer.json            metadata, version, authors
-├── ext.php                  requirements and block if original extension is active
+├── composer.json            metadati, versione, autori
+├── ext.php                  requisiti e blocco se l'estensione originale è attiva
 ├── license.txt              GPL 2.0
-├── README.md                this guide
+├── README.md                questa guida
 ├── CHANGELOG.md
-├── acp/                     ACP module (Settings, Check-up)
-├── adm/style/               ACP template, CSS, and JS
+├── acp/                     modulo ACP (Impostazioni, Check-up)
+├── adm/style/               template, CSS e JS dell'ACP
 ├── config/                  services.yml, routing.yml
 ├── controller/
-│   ├── acp_controller.php   settings, maintenance, check-up
-│   └── download.php         secure download (permissions, bots, CAPTCHA)
+│   ├── acp_controller.php   impostazioni, manutenzione, check-up
+│   └── download.php         scaricamento protetto (permessi, bot, CAPTCHA)
 ├── core/
-│   ├── access.php           download permissions (bots, login, groups)
-│   ├── catalog.php          259 languages, aliases, file extensions
+│   ├── access.php           chi può scaricare (bot, accesso, gruppi)
+│   ├── catalog.php          259 linguaggi, alias, estensioni dei file
 │   ├── highlighter.php      GeSHi + cache
-│   ├── box_renderer.php     box and toolbar generator
-│   └── code_helper.php      normalization, post extraction, fingerprint
-├── event/main_listener.php  BBCode, rendering, download links, editor
-├── includes/geshi/          GeSHi 1.0.9.1 adapted for PHP 8
+│   ├── box_renderer.php     costruzione del riquadro e della barra
+│   └── code_helper.php      normalizzazione, estrazione dal messaggio, impronta
+├── event/main_listener.php  BBCode, rendering, link di scaricamento, editor
+├── includes/geshi/          GeSHi 1.0.9.1 adattato a PHP 8
 ├── language/{it,en,de,es,sv,et,vi}/
 ├── migrations/v400_install.php
 └── styles/all/
-    ├── template/            events, download page, js/codeboxplus.js
+    ├── template/            eventi, pagina di scaricamento, js/codeboxplus.js
     └── theme/codeboxplus.css
 ```
 
 ## 14. Changelog
 
-# Changelog – Codebox Plus
-
-## 4.0.2 (2026-10-14) – Salvo Cortesiano
-
-- **New:** ACP option to choose **authorized download groups** (no groups = all users). Unauthorized users do not see the *Download* button and direct downloads are rejected; guests are prompted to log in.
-- **New:** The **Show all code / Show less** button is now located in the top toolbar with a Font Awesome icon in a neutral color.
-- **New:** Clickable **credits** at the bottom of each code box: original author (repository), phpBB 3.3 version (website), and GitHub repository. Can be disabled in ACP; repository URL configurable in ACP or via language files (`CBP_CREDITS_*`).
-- Check-up: added check for authorized download groups.
-
-## 4.0.1 (2026-10-13) – Salvo Cortesiano
-
-- **Fixed:** Code blocks containing nested `[codebox]` / `[/codebox]` tags (e.g., source code of this extension, a custom BBCode, or a string like `'[/codebox]'`) were previously split into multiple boxes and plain text. Now, the outer box always closes at the correct tag and code remains intact, even when editing or quoting posts.
-
-## 4.0.0 (2026-10-13) – Salvo Cortesiano
-
-Complete rewrite for phpBB 3.3.x (tested on 3.3.19) and PHP 7.2 – 8.3.
-
-### Fixes
-- BBCode registered in phpBB 3.3's s9e formatter (the legacy version used the `/e` modifier, removed in PHP 7).
-- Replaced invalid `config/routing.yml` (fatal YAML error).
-- Controller no longer initializes sessions in the constructor and sends files via proper HTTP responses.
-- Box content is no longer altered by BBCode, smilies, auto-links, and `<br>` tags.
-- Fixed GeSHi PHP 8 warnings (`thinbasic` and `usd` languages) and removed direct `echo` output.
-- CAPTCHA now correctly submits required hidden fields (Q&A, reCAPTCHA) and properly tracks attempts.
-- SQL queries strictly cast integer values; no direct access to `$_GET`/`$_POST`.
-
-### New Features
-- Responsive box layout: header displaying language, file name, and line count; toolbar with Copy, Select, Word Wrap, Line Numbers, Fullscreen, Download.
-- Fixed line numbers during horizontal scrolling, never copied; one-click line highlighting.
-- Long code blocks collapsed with a "Show all code" bar; configurable height.
-- 6 themes: Automatic, Light, Dark, Monokai, Dracula, Nord.
-- Container queries: box adapts smoothly even in narrow containers (quotes, columns).
-- `</>` button in the editor, quick reply, and private messages opening a modal for language selection, search, most used languages, file name, and preview.
-- Updated GeSHi (2024 master): 259 languages, 35 new ones (Rust, Kotlin, Swift, Dart, Julia, Nginx, Sass, Twig, JSON, TypeScript…), common aliases (`js`, `py`, `sh`, `yml`…).
-- Secure downloads protected by SHA-256 fingerprints (hidden code is non-downloadable), approval checks, optional "Can download files" permission, guest-only CAPTCHA, 30-minute validity window.
-- Client-side browser downloading for previews and private messages.
-- Highlighting cache and size limits.
-- ACP with info cards, live preview, AJAX-confirmed maintenance tasks, and Check-up tab (17 checks).
-- Download counter.
-- Automatic migration from original extension settings and legacy BBCode cleanup.
-- Full translations: Italian, English, German, Spanish, Swedish, Estonian, Vietnamese.
-- EPV validation: 0 errors, 0 warnings, 0 notices.
-
-## 3.0.0 (2014) – o0johntam0o
-- Original version for phpBB 3.1/3.2: GeSHi highlighting, expand/collapse, code downloading.
+Vedi `CHANGELOG.md`.
 
 ---
 
-**Codebox Plus** – developed by Huynh Buu Tam (o0johntam0o) · rewritten and enhanced for phpBB 3.3 by Salvo Cortesiano · GeSHi syntax highlighting engine by Nigel McNie & Benny Baumann.
+**Codebox Plus** – sviluppata da Huynh Buu Tam (o0johntam0o) · riscritta e potenziata per phpBB 3.3 da Salvo Cortesiano · motore di evidenziazione GeSHi di Nigel McNie & Benny Baumann.
