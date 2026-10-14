@@ -1,5 +1,9 @@
 # Changelog – Codebox Plus
 
+## 4.0.7 (2026-10-14) – Salvo Cortesiano
+
+- **Corretto:** nel log dell'amministratore le voci “Modulo aggiunto” scritte all'attivazione dell'estensione mostravano i nomi tecnici (`ACP_CBP_TITLE`, `ACP_CBP_SETTINGS`, `ACP_CBP_CHECKUP`). phpBB scrive quei nomi prima di aver caricato la lingua dell'estensione: ora l'estensione traduce quei nomi quando il log viene mostrato, nella lingua di chi lo legge (Codebox Plus, Impostazioni, Check-up), anche per le voci già presenti nel log e per quelle future (installazione, aggiornamento, disinstallazione).
+
 ## 4.0.6 (2026-10-14) – Salvo Cortesiano
 
 - **Nuovo – contatore dei download:** nella testata di ogni riquadro, dopo il numero di righe, compare quante volte è stato scaricato quel codice. Conteggio per blocco di codice di ogni messaggio (nuova tabella `cbp_downloads`), aggiornato subito dopo il download e azzerato insieme al contatore totale in ACP. Opzione ACP per nasconderlo.

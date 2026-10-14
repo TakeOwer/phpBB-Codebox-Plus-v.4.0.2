@@ -86,6 +86,7 @@ class main_listener implements EventSubscriberInterface
 			'core.topic_review_modify_row'				=> 'topic_review_row',
 			'core.search_modify_tpl_ary'				=> 'search_row',
 			'core.page_footer'							=> 'page_footer',
+			'core.get_logs_modify_entry_data'			=> 'translate_log_entry',
 		);
 	}
 
@@ -102,6 +103,35 @@ class main_listener implements EventSubscriberInterface
 			'lang_set'	=> 'common',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
+	}
+
+	/**
+	 * Logs written by phpBB while the extension is enabled (module added,
+	 * removed...) store the module names untranslated, because the language
+	 * of the extension is not loaded yet at that moment: translate them
+	 * when the log is displayed.
+	 *
+	 * @param \phpbb\event\data $event
+	 */
+	public function translate_log_entry($event)
+	{
+		$row = $event['row'];
+
+		if (empty($row['log_data']) || strpos($row['log_data'], 'ACP_CBP_') === false)
+		{
+			return;
+		}
+
+		$this->language->add_lang('info_acp_codeboxplus', 'salvocortesiano/codeboxplus');
+
+		// Replace only the serialized strings that are exactly one of our module names
+		$row['log_data'] = preg_replace_callback('#s:\d+:"(ACP_CBP_[A-Z_]+)";#', function ($m) {
+			$name = $this->language->lang($m[1]);
+
+			return 's:' . strlen($name) . ':"' . $name . '";';
+		}, $row['log_data']);
+
+		$event['row'] = $row;
 	}
 
 	/**
